@@ -54,7 +54,7 @@ A Python asynchronous tool to **tail Oracle Diagnostic Repository XML logfile**,
 
 ### Ansible-rulebook example
 
-#### Oracle CMAN
+#### Oracle Connection MANager
 
 ```
 - name: Monitor Oracle CMAN connection errors
@@ -82,7 +82,7 @@ A Python asynchronous tool to **tail Oracle Diagnostic Repository XML logfile**,
   sources:
     - jewdba.eda.oracle_adr_alertmanager:
         delay: 1
-        adr_home: "/u01/app/grid/diag/tnslsnr/svl-oat/listener"
+        adr_home: "/u01/app/grid/diag/tnslsnr/svl-ch-ora001t/listener"
         pattern: "TNS-[0-9]{5}|\\s\\*\\s+[0-9]{5}"
 
   rules:
