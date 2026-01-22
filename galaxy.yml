@@ -1,0 +1,62 @@
+---
+namespace: jewdba
+name: eda
+version: 1.0.0
+readme: README.md
+authors:
+  - jewdba <https://github.com/jewdba>
+description: >
+  Event-Driven Ansible (EDA) plugin to tail Oracle Automatic Diagnostic Repository (ADR) XML logfile
+  and emit structured events based on regex pattern matching.
+license:
+  - MIT
+license_file: LICENSE
+tags:
+  - ansible-eda
+  - oracle
+  - event-source
+  - automation
+dependencies: {}
+repository: "https://github.com/jewdba/oracle_adr_alertmanager"
+documentation: "README.md"
+homepage: "https://github.com/jewdba/oracle_adr_alertmanager"
+issues: "https://github.com/jewdba/oracle_adr_alertmanager/issues"
+
+# Exclude these patterns from the collection build artifact
+build_ignore:
+  # Editor / OS files
+  - ".DS_Store"
+  - "**/.DS_Store"
+  # Cache and virtualenvs, Python egg‑info artifacts
+  - ".venv"
+  - ".venv/**"
+  - "__pycache__"
+  - "**/__pycache__"
+  - "*.pyc"
+  - "*.pyo"
+  - ".pytest_cache"
+  - ".pytest_cache/**"
+  - ".mypy_cache"
+  - ".mypy_cache/**"
+  - ".ruff_cache"
+  - ".ruff_cache/**"
+  - "*.egg-info"
+  - "*.egg-info/**"
+
+  # Tests / docs not part of final collection
+  # Integration & sanity tests (ignore these)
+  #- "tests/integration/**"
+  #- "tests/sanity/**"
+  - "docs/**"
+  - "!docs/rst/**"
+
+  # IDE & config
+  - ".gitignore"
+  - ".pre-commit-config.yaml"
+  - ".vscode"
+  - ".vscode/**"
+  - ".github"
+  - ".github/**"
+  - ".pylintrc"
+  - "pyproject.toml"
+  - "uv.lock"

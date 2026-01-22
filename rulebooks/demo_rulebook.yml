@@ -1,0 +1,17 @@
+---
+- name: Monitor Oracle CMAN connection errors
+  hosts: localhost
+  sources:
+    - jewdba.eda.oracle_adr_alertmanager:
+        delay: 1
+        adr_home: "/opt/oracle/diag/netcman/svl-ch-cman666p/cman"
+        pattern: "(TNS-[0-9]{5})"
+
+  rules:
+    - name: Print errors
+      condition: True
+      # conditon: when event.host_addr != '10.161.25.43'
+      action:
+        print_event:
+          var_root: "event"
+          pretty: True

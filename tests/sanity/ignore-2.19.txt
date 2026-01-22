@@ -1,0 +1,3 @@
+docs/docsite/objects.inv no-smart-quotes!skip # Sphinx generated inventory file
+docs/docsite/objects.inv line-endings!skip # Sphinx generated inventory file
+docs/docsite/rst/event_sources/oracle_adr_alertmanager.html no-smart-quotes!skip # Sphinx generated inventory file

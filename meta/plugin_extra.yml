@@ -1,0 +1,5 @@
+# meta/plugin_extra.yml
+plugin_routing:
+  event_source:
+    oracle_adr_alertmanager:
+      description: "Receive events from Oracle Diagnostic Repository XML logs based on a search pattern"

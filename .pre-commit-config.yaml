@@ -1,0 +1,69 @@
+default_language_version:
+  python: python3.11
+
+repos:
+  - repo: https://github.com/hadialqattan/pycln
+    rev: v2.6.0
+    hooks:
+      - name: pycln - python cleanup tool (removes unused imports)
+        id: pycln
+        args: [--all]
+
+  - repo: https://github.com/hukkin/mdformat
+    rev: 1.0.0
+    hooks:
+      - id: mdformat
+        name: markdown - Markdown formatter
+        exclude: "CONTRIBUTING.md" # Formatted Markdown renders to different HTML than input Markdown. This is a bug ...
+
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v4.11.6
+    hooks:
+      - id: commitizen
+        name: commitizen - Conventional commit messages check
+        stages: [commit-msg]
+
+  - repo: local
+    hooks:
+      - id: black
+        name: black - Python code formatter
+        entry: ./.venv/bin/black tests/ plugins/
+        language: system
+        types: [python]
+        require_serial: True
+
+      - id: ruff-format
+        name: ruff - Python code formatter (check mode)
+        entry: ./.venv/bin/ruff format --check
+        language: system
+        types: [python]
+        require_serial: True
+
+      - id: ruff-lint
+        name: ruff - Pythom code linting (check mode & implement fix)
+        entry: ./.venv/bin/ruff check --fix
+        language: system
+        types: [python]
+        require_serial: True
+
+      - id: mypy
+        name: mypy - Python static type checks
+        entry: .venv/bin/mypy
+        language: system
+        types: [python]
+        require_serial: True
+        args: ["--config-file=./pyproject.toml"]
+
+      - id: pytest
+        name: pytest - Run unit and integration tests
+        entry: "./.venv/bin/pytest --trace-config"
+        language: system
+        types: [python]
+        require_serial: True
+
+      - id: ansible-test sanity
+        name: ansible-test - Run sanity checks
+        entry: ansible-test sanity
+        language: system
+        types: [python]
+        require_serial: True
