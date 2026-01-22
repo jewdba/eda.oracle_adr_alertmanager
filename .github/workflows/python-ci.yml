@@ -11,14 +11,14 @@ jobs:
   lint-and-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          path: ~/Ansible_devs/ansible_collections/jewdba/eda
-
       - name: Setup Python & uv
         uses: ./.github/actions/python-setup
         with:
           python-version: "3.12"
+
+      - uses: actions/checkout@v4
+        with:
+          path: ~/Ansible_devs/ansible_collections/jewdba/eda
 
       - name: Run Pylint
         run: uv run pylint plugins
