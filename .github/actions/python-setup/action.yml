@@ -22,21 +22,23 @@ runs:
 
     - name: Upgrade pip
       run: python -m pip install --upgrade pip
+      shell: bash
 
     - name: Install uv
       run: python -m pip install uv
+      shell: bash
 
     - name: Create virtual environment
-      shell: bash
       run: |
         uv venv --clear
+      shell: bash
 
     - name: Install all project dependencies
-      shell: bash
       run: |
         uv sync --all-extras
+      shell: bash
 
     - name: Set Python path output
       id: python-path
-      shell: bash
       run: echo "python-path=$(which python)" >> "$GITHUB_OUTPUT"
+      shell: bash
