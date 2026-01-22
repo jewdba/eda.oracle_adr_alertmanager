@@ -17,13 +17,11 @@ A Python asynchronous tool to **tail Oracle Diagnostic Repository XML logfile**,
 - Ansible-rulebook 1.2+ (implicit requirement Java 17+)
 - No additional libraries
 
-## Installation
-
 ## Configuration
 
 | Parameter | Type | Required | Default | Description |
 |-----------|------|----------|--------|-------------|
-| adr_home | str | Yes | --- | Oracle ADR home directory |
+| adr_home | str | Yes | (none) | Oracle ADR home directory |
 | pattern | str | Yes | (TNS|ORA)-[0-9]{5} | Regex applied to message text (ie: ORA-[0-9]{5}) |
 | delay | int | no | 1 | Polling delay in seconds |
 
