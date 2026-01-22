@@ -142,11 +142,9 @@ That's it ! well done.
 
 Please refer to [CHANGELOG.md](CHANGELOG.md) for details on what’s changed in each release.
 
-ToDo
--> How to organize repo.
----> login /eda.oracle_adr_alertmanager
--> load on github
--> ReadME contrib (Setup env exampke)
--> Optimite .github actions
--> Doc + ChangeLog / artifacts
--> Clean git ignore list (remove all .gitignor files)
+# ToDo
+- load on github
+- ReadME contrib (Setup env exampke)
+- Optimite .github actions
+- oc + ChangeLog / artifacts
+-  clean git ignore list (remove all .gitignor files)
