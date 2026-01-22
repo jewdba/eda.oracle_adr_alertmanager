@@ -16,7 +16,7 @@ jobs:
       - name: Setup Python & uv
         uses: ./.github/actions/python-setup
         with:
-          python-version: "3.11"
+          python-version: "3.12"
 
       - name: Run Pylint
         run: uv run pylint plugins
@@ -28,4 +28,4 @@ jobs:
         run: uv run ansible-test sanity
 
       - name: Run Ansible unit tests
-        run: uv run ansible-test units --python 3.11
+        run: uv run ansible-test units --python 3.12
