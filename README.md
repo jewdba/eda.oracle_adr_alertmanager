@@ -141,8 +141,7 @@ That's it ! well done.
 Please refer to [CHANGELOG.md](CHANGELOG.md) for details on what’s changed in each release.
 
 # ToDo
-- load on github
-- ReadME contrib (Setup env exampke)
-- Optimite .github actions
-- oc + ChangeLog / artifacts
--  clean git ignore list (remove all .gitignor files)
+- Update README correctly for testing
+- github CI
+- Manage build (doc + ansible collection)
+- Review galaxy.yml (git ignore)
