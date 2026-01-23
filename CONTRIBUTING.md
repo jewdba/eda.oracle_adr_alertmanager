@@ -233,7 +233,7 @@ Test a particular workflow (option -W):
 
 ```
 export DOCKER_HOST=unix:///Users/jew/.rd/docker.sock
-act -W .github/workflows/build.yml \
+act -W .github/workflows/python-ci.yml \
     --container-daemon-socket - \
     -P ubuntu-latest=ghcr.io/catthehacker/ubuntu:act-latest
 ``

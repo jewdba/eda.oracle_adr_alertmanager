@@ -150,6 +150,5 @@ Please refer to [CHANGELOG.md](CHANGELOG.md) for details on what's changed in ea
 
 # ToDo
 - Update README correctly for testing
-- github CI
 - Manage build (doc + ansible collection)
 - Review galaxy.yml (git ignore)
