@@ -34,7 +34,7 @@ jobs:
           shopt -s extglob
           mv !(ansible_collections) ansible_collections/jewdba/eda/
       - run: uv run ansible-test sanity
-
+        working-directory: ansible_collections/jewdba/eda
   ansible-units:
     needs: [pylint, pytest]
     runs-on: ubuntu-latest
@@ -47,3 +47,4 @@ jobs:
           shopt -s extglob
           mv !(ansible_collections) ansible_collections/jewdba/eda/
       - run: uv run ansible-test units --python 3.12
+        working-directory: ansible_collections/jewdba/eda
