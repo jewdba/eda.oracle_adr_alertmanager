@@ -1,35 +1,55 @@
-name: CI Pipeline
+name: Python CI
 
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch: {}
 
 jobs:
-  lint:
+  lint-and-test:
     runs-on: ubuntu-latest
 
+    # Default working directory for all steps
+    defaults:
+      run:
+        working-directory: ansible_collections/jewdba/eda
+
     steps:
-      # Step 1: Checkout repository
+      # 1️⃣ Checkout the code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Set up Python (required for pylint / uv)
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      # 2️⃣ Set up Python 3.12 and pip
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.11  # adjust if needed
+          python-version: "3.12"
+          cache: "pip"
 
-      # Step 4: Ensure plugins folder exists
-      - name: Prepare plugins folder
-        run: mkdir -p ansible_collections/jewdba/eda
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
 
-      # Step 5: Run pylint on plugins
-      - name: Run pylint on plugins
-        working-directory: ${{ github.workspace }}
-        run: python -m uv run pylint plugins --cwd ansible_collections/jewdba/eda
+      # 3️⃣ Install uv and create virtual environment
+      - name: Install uv and project dependencies
+        run: |
+          pip install uv pylint pytest ansible  # Add other dependencies here
+          uv venv --clear
+          uv sync --all-extras
 
-      # Optional: List contents to verify
-      - name: Verify folder contents
-        run: ls -l ansible_collections/jewdba/eda
+      # 4️⃣ Run Python linting
+      - name: Run Pylint
+        run: uv run pylint plugins
+
+      # 5️⃣ Run unit & integration tests
+      - name: Run Python unit & integration tests
+        run: uv run pytest
+
+      # 6️⃣ Run Ansible sanity tests
+      - name: Run Ansible sanity tests
+        run: uv run ansible-test sanity
+
+      # 7️⃣ Run Ansible unit tests
+      - name: Run Ansible unit tests
+        run: uv run ansible-test units --python 3.12
