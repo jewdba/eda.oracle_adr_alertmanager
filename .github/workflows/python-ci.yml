@@ -8,16 +8,17 @@ on:
   workflow_dispatch: {}
 
 jobs:
-  lint-and-test:
+  # 1️⃣ Checkout & setup Python (shared by other jobs)
+  setup-python:
     runs-on: ubuntu-latest
-
+    outputs:
+      python-path: ${{ steps.python-setup.outputs.python-path }}
     steps:
-      # 1️⃣ Checkout the code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Set up Python 3.12 and pip
       - name: Setup Python 3.12
+        id: python-setup
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -26,25 +27,52 @@ jobs:
       - name: Upgrade pip
         run: python -m pip install --upgrade pip
 
-      # 3️⃣ Install uv and create virtual environment
       - name: Install uv and project dependencies
         run: |
-          pip install uv pylint pytest ansible  # Add other dependencies here
+          pip install uv pylint pytest ansible
           uv venv --clear
           uv sync --all-extras
 
-      # 4️⃣ Run Python linting
+  # 2️⃣ Run Pylint
+  lint:
+    needs: setup-python
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Run Pylint
         run: uv run pylint plugins
 
-      # 5️⃣ Run unit & integration tests
+  # 3️⃣ Run Python unit & integration tests
+  python-tests:
+    needs: setup-python
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Run Python unit & integration tests
         run: uv run pytest
 
-      # 6️⃣ Run Ansible sanity tests
+  # 4️⃣ Run Ansible sanity tests
+  ansible-sanity:
+    needs: setup-python
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Run Ansible sanity tests
         run: uv run ansible-test sanity
 
-      # 7️⃣ Run Ansible unit tests
+  # 5️⃣ Run Ansible unit tests
+  ansible-units:
+    needs: setup-python
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Run Ansible unit tests
         run: uv run ansible-test units --python 3.12
