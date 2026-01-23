@@ -22,7 +22,7 @@ ______________________________________________________________________
 
 # Getting started
 
-## Clone the repo.
+## Clone the repo
 
 ```
 git clone https://github.com/jewdba/eda.oracle_adr_alertmanager.git
