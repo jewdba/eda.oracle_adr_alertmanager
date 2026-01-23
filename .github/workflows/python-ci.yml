@@ -8,17 +8,17 @@ on:
   workflow_dispatch: {}
 
 jobs:
-  # 1️⃣ Checkout & setup Python (shared by other jobs)
+  # 1️⃣ Setup Python and dependencies (shared by other jobs)
   setup-python:
     runs-on: ubuntu-latest
     outputs:
-      python-path: ${{ steps.python-setup.outputs.python-path }}
+      venv-path: ${{ steps.setup.outputs.venv-path }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Python 3.12
-        id: python-setup
+        id: setup
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -33,7 +33,7 @@ jobs:
           uv venv --clear
           uv sync --all-extras
 
-  # 2️⃣ Run Pylint
+  # 2️⃣ Python Linting
   lint:
     needs: setup-python
     runs-on: ubuntu-latest
@@ -44,7 +44,7 @@ jobs:
       - name: Run Pylint
         run: uv run pylint plugins
 
-  # 3️⃣ Run Python unit & integration tests
+  # 3️⃣ Python Tests
   python-tests:
     needs: setup-python
     runs-on: ubuntu-latest
@@ -55,9 +55,9 @@ jobs:
       - name: Run Python unit & integration tests
         run: uv run pytest
 
-  # 4️⃣ Run Ansible sanity tests
+  # 4️⃣ Ansible Sanity Tests (after lint & pytest)
   ansible-sanity:
-    needs: setup-python
+    needs: [lint, python-tests]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -66,9 +66,9 @@ jobs:
       - name: Run Ansible sanity tests
         run: uv run ansible-test sanity
 
-  # 5️⃣ Run Ansible unit tests
+  # 5️⃣ Ansible Unit Tests (after lint & pytest)
   ansible-units:
-    needs: setup-python
+    needs: [lint, python-tests]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
