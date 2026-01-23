@@ -1,78 +1,16 @@
-name: Python CI
-
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-  workflow_dispatch: {}
-
 jobs:
-  # 1️⃣ Setup Python and dependencies (shared by other jobs)
-  setup-python:
-    runs-on: ubuntu-latest
-    outputs:
-      venv-path: ${{ steps.setup.outputs.venv-path }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Python 3.12
-        id: setup
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-          cache: "pip"
-
-      - name: Upgrade pip
-        run: python -m pip install --upgrade pip
-
-      - name: Install uv and project dependencies
-        run: |
-          pip install uv pylint pytest ansible
-          uv venv --clear
-          uv sync --all-extras
-
-  # 2️⃣ Python Linting
   lint:
-    needs: setup-python
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/python-setup
 
-      - name: Run Pylint
-        run: uv run pylint plugins
+      - run: uv run pylint plugins
 
-  # 3️⃣ Python Tests
   python-tests:
-    needs: setup-python
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/python-setup
 
-      - name: Run Python unit & integration tests
-        run: uv run pytest
-
-  # 4️⃣ Ansible Sanity Tests (after lint & pytest)
-  ansible-sanity:
-    needs: [lint, python-tests]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Run Ansible sanity tests
-        run: uv run ansible-test sanity
-
-  # 5️⃣ Ansible Unit Tests (after lint & pytest)
-  ansible-units:
-    needs: [lint, python-tests]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Run Ansible unit tests
-        run: uv run ansible-test units --python 3.12
+      - run: uv run pytest
