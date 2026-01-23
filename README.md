@@ -1,5 +1,16 @@
 # oracle_adr_alertmanager
 
+<!-- GitHub repo info -->
+![Version](https://img.shields.io/github/v/release/jewdba/eda.oracle_adr_alertmanager)
+![GitHub issues](https://img.shields.io/github/issues/jewdba/eda.oracle_adr_alertmanager)
+
+<!-- Build / CI -->
+![CI](https://img.shields.io/github/actions/workflow/status/jewdba/eda.oracle_adr_alertmanager/ci.yml?branch=main)
+
+<!-- Language / License -->
+![Python](https://img.shields.io/github/languages/top/jewdba/eda.oracle_adr_alertmanager)
+![License](https://img.shields.io/github/license/jewdba/eda.oracle_adr_alertmanager)
+
 A Python asynchronous tool to **tail Oracle Diagnostic Repository XML logfile**, handle log rotation, and extract events matching a specific pattern (e.g., Oracle error codes).
 
 ## Features
