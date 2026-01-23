@@ -1,10 +1,12 @@
 # oracle_adr_alertmanager
 
 <!-- GitHub repo info -->
+
 ![Version](https://img.shields.io/github/v/release/jewdba/eda.oracle_adr_alertmanager)
 ![GitHub issues](https://img.shields.io/github/issues/jewdba/eda.oracle_adr_alertmanager)
 
 <!-- Language / License -->
+
 ![Python](https://img.shields.io/github/languages/top/jewdba/eda.oracle_adr_alertmanager)
 ![License](https://img.shields.io/github/license/jewdba/eda.oracle_adr_alertmanager)
 
@@ -149,6 +151,7 @@ That's it ! well done.
 Please refer to [CHANGELOG.md](CHANGELOG.md) for details on what's changed in each release.
 
 # ToDo
+
 - Update README correctly for testing
 - Manage build (doc + ansible collection)
 - Review galaxy.yml (git ignore)
