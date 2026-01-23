@@ -31,8 +31,8 @@ jobs:
       - name: Create collection path
         run: |
           mkdir -p ansible_collections/jewdba/eda
-          mv * ansible_collections/jewdba/eda
-          ls ansible_collections/jewdba/eda
+          shopt -s extglob
+          mv !(ansible_collections) ansible_collections/jewdba/eda/
       - run: uv run ansible-test sanity
 
   ansible-units:
@@ -43,7 +43,7 @@ jobs:
       - uses: ./.github/actions/python-setup
       - name: Create collection path
         run: |
-          mkdir -p ansible_collections/jewdba
-          mv * ansible_collections/jewdba/eda
-          ls ansible_collections/jewdba/eda
+          mkdir -p ansible_collections/jewdba/eda
+          shopt -s extglob
+          mv !(ansible_collections) ansible_collections/jewdba/eda/
       - run: uv run ansible-test units --python 3.12
