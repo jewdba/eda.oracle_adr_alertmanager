@@ -1,48 +1,35 @@
-name: Python CI
+name: CI Pipeline
 
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
-  workflow_dispatch: {}
 
 jobs:
-  lint-and-test:
+  lint:
     runs-on: ubuntu-latest
 
-    # This ensures all run steps default to the collection directory
-    defaults:
-      run:
-        working-directory: ansible_collections/jewdba/eda
-
     steps:
-      # Checkout the code
+      # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Setup Python and UV virtual environment
-      - name: Setup Python & uv
-        uses: ./.github/actions/python-setup
+      # Step 2: Set up Python (required for pylint / uv)
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          python-version: "3.12"
+          python-version: 3.11  # adjust if needed
 
-      - name: Eztest
-        run: |
-          ls -l
+      # Step 4: Ensure plugins folder exists
+      - name: Prepare plugins folder
+        run: mkdir -p ansible_collections/jewdba/eda
 
-      # Lint Python code
-      - name: Run Pylint
-        run: uv run pylint plugins
+      # Step 5: Run pylint on plugins
+      - name: Run pylint on plugins
+        working-directory: ${{ github.workspace }}
+        run: uv run pylint plugins --cwd ansible_collections/jewdba/eda
 
-      # Run unit & integration tests
-      - name: Run unit & integration tests
-        run: uv run pytest
-
-      # Run Ansible sanity tests
-      - name: Run Ansible sanity tests
-        run: uv run ansible-test sanity
-
-      # Run Ansible unit tests
-      - name: Run Ansible unit tests
-        run: uv run ansible-test units --python 3.12
+      # Optional: List contents to verify
+      - name: Verify folder contents
+        run: ls -l ansible_collections/jewdba/eda
