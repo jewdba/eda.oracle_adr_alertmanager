@@ -229,7 +229,7 @@ act \
   --rm                    
 ```
 
-test a particular workflow (option -W):
+Test a particular workflow (option -W):
 
 ```
 export DOCKER_HOST=unix:///Users/jew/.rd/docker.sock

@@ -146,7 +146,7 @@ That's it ! well done.
 
 ## Changelog
 
-Please refer to [CHANGELOG.md](CHANGELOG.md) for details on what’s changed in each release.
+Please refer to [CHANGELOG.md](CHANGELOG.md) for details on what's changed in each release.
 
 # ToDo
 - Update README correctly for testing

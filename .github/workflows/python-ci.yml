@@ -10,21 +10,35 @@ on:
 jobs:
   lint-and-test:
     runs-on: ubuntu-latest
+
+    # This ensures all run steps default to the collection directory
+    defaults:
+      run:
+        working-directory: ansible_collections/jewdba/eda
+
     steps:
-      - uses: actions/checkout@v4
+      # Checkout the code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Setup Python and UV virtual environment
       - name: Setup Python & uv
         uses: ./.github/actions/python-setup
         with:
           python-version: "3.12"
 
+      # Lint Python code
       - name: Run Pylint
         run: uv run pylint plugins
 
+      # Run unit & integration tests
       - name: Run unit & integration tests
         run: uv run pytest
 
+      # Run Ansible sanity tests
       - name: Run Ansible sanity tests
         run: uv run ansible-test sanity
 
+      # Run Ansible unit tests
       - name: Run Ansible unit tests
         run: uv run ansible-test units --python 3.12
