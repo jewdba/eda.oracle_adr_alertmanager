@@ -27,6 +27,11 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Eztest
+        run: |
+          pwd
+          ls -l
+
       # Lint Python code
       - name: Run Pylint
         run: uv run pylint plugins
