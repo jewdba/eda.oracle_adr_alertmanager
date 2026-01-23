@@ -1,11 +1,11 @@
-name: "Python setup with uv"
-description: "Setup Python, install uv, and sync dependencies"
+name: "Python setup with uv (cached)"
+description: "Setup Python, cache deps, install uv, sync project dependencies"
 
 inputs:
   python-version:
     description: "Python version"
-    required: false
     default: "3.12"
+    required: false
 
 runs:
   using: "composite"
@@ -15,6 +15,16 @@ runs:
       with:
         python-version: ${{ inputs.python-version }}
         cache: "pip"
+
+    # Cache uv's global cache (wheels + downloads)
+    - name: Cache uv
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cache/uv
+        key: uv-${{ runner.os }}-${{ inputs.python-version }}-${{ hashFiles('**/uv.lock') }}
+        restore-keys: |
+          uv-${{ runner.os }}-${{ inputs.python-version }}-
 
     - name: Upgrade pip
       run: python -m pip install --upgrade pip
