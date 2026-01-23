@@ -29,7 +29,6 @@ jobs:
 
       - name: Eztest
         run: |
-          pwd
           ls -l
 
       # Lint Python code
