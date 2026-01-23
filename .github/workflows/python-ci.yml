@@ -11,11 +11,6 @@ jobs:
   lint-and-test:
     runs-on: ubuntu-latest
 
-    # Default working directory for all steps
-    defaults:
-      run:
-        working-directory: ansible_collections/jewdba/eda
-
     steps:
       # 1️⃣ Checkout the code
       - name: Checkout repository
