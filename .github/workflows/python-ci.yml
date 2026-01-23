@@ -28,9 +28,7 @@ jobs:
       # Step 5: Run pylint on plugins
       - name: Run pylint on plugins
         working-directory: ${{ github.workspace }}
-        run: |
-          source .venv/bin/activate
-          uv run pylint plugins --cwd ansible_collections/jewdba/eda
+        run: python -m uv run pylint plugins --cwd ansible_collections/jewdba/eda
 
       # Optional: List contents to verify
       - name: Verify folder contents
