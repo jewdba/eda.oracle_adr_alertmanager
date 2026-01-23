@@ -26,7 +26,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: ./.github/actions/python-setup
+      - name: Create collection path
+        run: |
+          mkdir -p ansible_collections/jewdba
+          mv * ansible_collections/jewdba/eda
+          ls ansible_collections/jewdba/eda
       - run: uv run ansible-test sanity
 
   ansible-units:
@@ -35,4 +41,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/python-setup
+      - name: Create collection path
+        run: |
+          mkdir -p ansible_collections/jewdba
+          mv * ansible_collections/jewdba/eda
+          ls ansible_collections/jewdba/eda
       - run: uv run ansible-test units --python 3.12
