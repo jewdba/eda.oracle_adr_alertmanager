@@ -7,16 +7,32 @@ on:
   workflow_dispatch:
 
 jobs:
-  lint:
+  pylint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/python-setup
       - run: uv run pylint plugins
 
-  python-tests:
+  pytest:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/python-setup
       - run: uv run pytest
+
+  ansible-sanity:
+    needs: [pylint, pytest]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/python-setup
+      - run: uv run ansible-test sanity
+
+  ansible-units:
+    needs: [pylint, pytest]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/python-setup
+      - run: uv run ansible-test units --python 3.12
