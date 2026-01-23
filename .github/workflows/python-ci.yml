@@ -31,6 +31,7 @@ jobs:
       - name: Create collection path
         run: |
           mkdir -p ansible_collections/jewdba
+          ls -l
           mv * ansible_collections/jewdba/eda
           ls ansible_collections/jewdba/eda
       - run: uv run ansible-test sanity
