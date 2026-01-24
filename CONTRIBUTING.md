@@ -159,6 +159,37 @@ uv run ansible-test tests
 
 Executed automatically by GitHub CI workflow [.github/workflows/python-ci.yml](.github/workflows/python-ci.yml)
 
+______________________________________________________________________
+# GitHub CI
+
+## Local testing with `act`
+
+This project uses GitHub Actions for CI/CD. Contributors can test workflows locally using [`act`](https://github.com/nektos/act) without pushing commits.
+
+`act` allows you to run GitHub Actions workflows locally using Docker, without
+needing to push commits to GitHub.
+333
+
+### Using `act` with Rancher Desktop @ MacOS
+
+```
+# cd <Navigate to project root folder>
+export DOCKER_HOST=unix:///Users/jew/.rd/docker.sock
+act \
+  --container-daemon-socket - \
+  -P ubuntu-latest=ghcr.io/catthehacker/ubuntu:act-latest \
+  --rm                    
+```
+
+Test a specific workflow:
+```
+export DOCKER_HOST=unix:///Users/jew/.rd/docker.sock
+act -W .github/workflows/release.yml \
+  --container-daemon-socket - \
+  -P ubuntu-latest=ghcr.io/catthehacker/ubuntu:act-latest \
+  --rm       
+```
+
 
 ______________________________________________________________________
 # Documentation
@@ -186,39 +217,6 @@ uv run sphinx-build -b html docs docs/docsite
 ```
 
 Documenation is generated automatically by GitHub CI workflow [.github/workflows/build.yml](.github/workflows/build.yml)
-
-
-______________________________________________________________________
-# GitHub CI
-
-## Local testing with `act`
-
-This project uses GitHub Actions for CI/CD. Contributors can test workflows locally using [`act`](https://github.com/nektos/act) without pushing commits.
-
-`act` allows you to run GitHub Actions workflows locally using Docker, without
-needing to push commits to GitHub.
-333
-
-### Using `act` with Rancher Desktop @ MacOS
-
-```
-# cd <Navigate to project root folder>
-export DOCKER_HOST=unix:///Users/jew/.rd/docker.sock
-act \
-  --container-daemon-socket - \
-  -P ubuntu-latest=ghcr.io/catthehacker/ubuntu:act-latest \
-  --rm                    
-```
-
-Test a specific workflow:
-```
-export DOCKER_HOST=unix:///Users/jew/.rd/docker.sock
-act -W .github/workflows/python-ci.yml \
-    --container-daemon-socket - \
-    -P ubuntu-latest=ghcr.io/catthehacker/ubuntu:act-latest
-```
-
-
 
 ______________________________________________________________________
 # Build Ansible collection 

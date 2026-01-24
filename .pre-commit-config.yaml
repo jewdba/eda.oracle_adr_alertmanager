@@ -61,9 +61,16 @@ repos:
         types: [python]
         require_serial: True
 
-      - id: ansible-test sanity
-        name: ansible-test - Run sanity checks
-        entry: ansible-test sanity
-        language: system
-        types: [python]
-        require_serial: True
+      # ----------------------------------------------------------------------------------------------------------
+      # Manual execution of `ansible-test` requires your project to follow the standard Ansible collection layout:
+      #     ansible_collections/<namespace>/<collection>
+      #
+      # Moved to GitHub CI / local testing using `act`
+      # 
+      # ----------------------------------------------------------------------------------------------------------
+      #- id: ansible-test sanity
+      #  name: ansible-test - Run sanity checks
+      #  entry: ansible-test sanity
+      #  language: system
+      #  types: [python]
+      #  require_serial: True
