@@ -30,36 +30,37 @@ repos:
         entry: ./.venv/bin/black tests/ plugins/
         language: system
         types: [python]
-        require_serial: True
+        require_serial: False
 
       - id: ruff-format
         name: ruff - Python code formatter (check mode)
         entry: ./.venv/bin/ruff format --check
         language: system
         types: [python]
-        require_serial: True
+        require_serial: False
 
       - id: ruff-lint
         name: ruff - Pythom code linting (check mode & implement fix)
         entry: ./.venv/bin/ruff check --fix
         language: system
         types: [python]
-        require_serial: True
+        require_serial: False
 
       - id: mypy
         name: mypy - Python static type checks
         entry: .venv/bin/mypy
         language: system
         types: [python]
-        require_serial: True
+        require_serial: False
         args: ["--config-file=./pyproject.toml"]
 
       - id: pytest
         name: pytest - Run unit and integration tests
-        entry: "./.venv/bin/pytest --trace-config"
+        entry: ./.venv/bin/pytest
         language: system
         types: [python]
-        require_serial: True
+        require_serial: False
+        pass_filenames: false 
 
       # ----------------------------------------------------------------------------------------------------------
       # Manual execution of `ansible-test` requires your project to follow the standard Ansible collection layout:
