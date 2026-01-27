@@ -75,8 +75,13 @@ jobs:
             echo "# Changelog" > CHANGELOG.md
             git add CHANGELOG.md
             git commit -m "chore: create initial CHANGELOG.md [skip ci]"
+          else
+            # Make a guaranteed change so cz bump can commit
+            echo "" >> CHANGELOG.md
+            git add CHANGELOG.md
+            git commit -m "chore: prepare CHANGELOG for first release [skip ci]" || echo "Nothing to commit"
           fi
-          
+
           # Bump version with Commitizen
           if [ -z "$(git tag --list)" ]; then
             echo "No existing tag found. Using first-release mode."
