@@ -67,23 +67,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-    - name: Bump version and generate changelog
-      id: bump
-      run: |
-        # Ensure CHANGELOG.md exists
-        if [ ! -f CHANGELOG.md ]; then
-          echo "# Changelog" > CHANGELOG.md
-          git add CHANGELOG.md
-          git commit -m "chore: create initial CHANGELOG.md [skip ci]"
-        fi
-        
-        # Bump version with Commitizen
-        if [ -z "$(git tag --list)" ]; then
-          echo "No existing tag found. Using first-release mode."
-          npx cz bump --yes --first-release --commit-all --message 'chore(release): %s [skip ci]'
-        else
-          npx cz bump --yes --commit-all --message 'chore(release): %s [skip ci]'
-        fi
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Bump version and generate changelog
+        id: bump
+        run: |
+          # Ensure CHANGELOG.md exists
+          if [ ! -f CHANGELOG.md ]; then
+            echo "# Changelog" > CHANGELOG.md
+            git add CHANGELOG.md
+            git commit -m "chore: create initial CHANGELOG.md [skip ci]"
+          fi
+          
+          # Bump version with Commitizen
+          if [ -z "$(git tag --list)" ]; then
+            echo "No existing tag found. Using first-release mode."
+            npx cz bump --yes --first-release --commit-all --message 'chore(release): %s [skip ci]'
+          else
+            npx cz bump --yes --commit-all --message 'chore(release): %s [skip ci]'
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
