@@ -39,22 +39,21 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
+      - name: Prepare first release if needed
+        shell: bash
+        run: |
+          # Create initial changelog if empty or non‑existent
+          if [[ ! -s CHANGELOG.md ]]; then
+            echo "# Changelog" > CHANGELOG.md
+            git add CHANGELOG.md
+            git commit -m "chore: create initial CHANGELOG [skip ci]"
+          fi
+              
       - name: Bump version and generate changelog
         id: bump
+        shell: bash
         run: |
-          # npx cz bump --yes --commit-all --message 'chore(release): %s [skip ci]'
-          npx cz bump --dry-run --yes
-          # git push --follow-tags
+          npx cz bump --yes --commit-all --message 'chore(release): %s [skip ci]'
+          git push --follow-tags
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
-      - name: Push commit and tags
-        run: git push --follow-tags
-
-      - name: Get latest tag
-        id: tag
-        run: |
-          echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
-
-
