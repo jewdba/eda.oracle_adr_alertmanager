@@ -3,6 +3,9 @@ name: Python CI
 on:
   push:
     branches: ["*"]
+    tags:
+      - 'v*.*.*'   # triggers on any semantic version tag
+
 jobs:
   pylint:
     runs-on: ubuntu-latest
