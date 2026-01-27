@@ -57,19 +57,4 @@ jobs:
         run: |
           echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
 
-  release:
-    needs: bump
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Bump version and generate changelog
-        id: bump
-        run: |
-          npx cz bump --yes --commit-all --message 'chore(release): %s [skip ci]'
-          git push --follow-tags
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
