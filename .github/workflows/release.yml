@@ -42,15 +42,12 @@ jobs:
       - name: Bump version and generate changelog
         id: bump
         run: |
-          # If no tag exists, use --first-release
-          if [ -z "$(git tag --list)" ]; then
-            echo "No existing tag found. Using first-release mode."
-            npx cz bump --yes --first-release --commit-all --message 'chore(release): %s [skip ci]'
-          else
-            npx cz bump --yes --commit-all --message 'chore(release): %s [skip ci]'
-          fi
+          # npx cz bump --yes --commit-all --message 'chore(release): %s [skip ci]'
+          npx cz bump --dry-run --yes
+          # git push --follow-tags
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
       - name: Push commit and tags
         run: git push --follow-tags
