@@ -218,7 +218,6 @@ Please refer to [CHANGELOG.md](CHANGELOG.md) for details on what's changed in ea
 
 # ToDO
 
--> test
--> release -> cretae tab
+-> release -> git tag
 -> change build to remove docs as artifact
--> Move collection to package
+-> Move collection tgz to package
