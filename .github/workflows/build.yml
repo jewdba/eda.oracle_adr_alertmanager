@@ -9,7 +9,7 @@ on:
     branches:
       - main
   workflow_run:
-    workflows: ["Python CI", "release"]   # only CI, avoid including release to prevent loops
+    workflows: ["release"]
     types:
       - completed
 
@@ -99,5 +99,5 @@ jobs:
       - name: Upload Ansible collection artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ansible-collection
-          path: "*.tar.gz"
+          name: ansible-collection-${{ needs.build-doc.outputs.tag }}  # if you pass a tag
+          path: "jewdb-eda-*.tar.gz"
