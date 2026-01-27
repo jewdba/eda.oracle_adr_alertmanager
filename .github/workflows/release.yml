@@ -1,17 +1,11 @@
 name: Bump release
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    types: [closed]
-    branches:
-      - main
   workflow_run:
-    workflows: ["Python CI"]   # exact name of your CI workflow
-    types:
-      - completed
+    workflows: ["Python CI"]
+    types: [completed]
+    branches: ["main"]  # optional but safer
+
       
 permissions:
   contents: write
@@ -21,11 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       tag: ${{ steps.tag.outputs.tag }}
-
-    if: >
-      github.event_name == 'pull_request' &&
-      github.event.pull_request.merged == true &&
-      github.event.pull_request.base.ref == 'main'
 
     steps:
       - name: Checkout
@@ -66,11 +55,6 @@ jobs:
   release:
     needs: bump
     runs-on: ubuntu-latest
-
-    if: >
-      github.event_name == 'pull_request' &&
-      github.event.pull_request.merged == true &&
-      github.event.pull_request.base.ref == 'main'
 
     steps:
       - name: Checkout
