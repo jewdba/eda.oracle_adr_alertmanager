@@ -5,9 +5,8 @@ on:
     workflows: ["Python CI"]
     types: [completed]
     branches: ["main"]  # optional but safer
-  workflow_dispatch:
+  workflow_dispatch:  # allows manual triggering
 
-      
 permissions:
   contents: write
 
@@ -15,40 +14,46 @@ jobs:
   bump:
     runs-on: ubuntu-latest
     outputs:
-      tag: ${{ steps.tag.outputs.tag }}
+      tag: ${{ steps.get_tag.outputs.tag }}
 
     steps:
+      # --- Checkout repo with full history ---
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0  # full history required for Commitizen
 
+      # --- Setup Node ---
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
+      # --- Install dependencies ---
       - name: Install dependencies
         run: npm install
 
-      - name: Add local node_modules to PATH
+      # --- Add local node_modules binaries to PATH ---
+      - name: Add node_modules/.bin to PATH
         run: echo "$PWD/node_modules/.bin" >> $GITHUB_PATH
 
-      - name: Configure git
+      # --- Configure Git for CI commits ---
+      - name: Configure Git
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
+      # --- Prepare first release if needed ---
       - name: Prepare first release if needed
         shell: bash
         run: |
-          # Create initial changelog if empty or non‑existent
           if [[ ! -s CHANGELOG.md ]]; then
             echo "# Changelog" > CHANGELOG.md
             git add CHANGELOG.md
             git commit -m "chore: create initial CHANGELOG [skip ci]"
           fi
-              
+
+      # --- Bump version and generate changelog ---
       - name: Bump version and generate changelog
         id: bump
         shell: bash
@@ -57,3 +62,9 @@ jobs:
           git push --follow-tags
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # --- Capture the latest tag as output ---
+      - name: Get latest tag
+        id: get_tag
+        run: |
+          echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
