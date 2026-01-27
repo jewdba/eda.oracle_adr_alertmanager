@@ -5,6 +5,7 @@ on:
     workflows: ["release"]   # triggers after a release workflow completes
     types:
       - completed
+  workflow_dispatch:
 
 jobs:
   build-doc:
