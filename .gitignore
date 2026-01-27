@@ -24,6 +24,5 @@ tests/output
 uv.lock
 # Sphinx / Antsibull build output
 docs/
-build_docsite/
 # Collection tarball
 *.tar.gz
