@@ -44,7 +44,7 @@ jobs:
 
       # 4. Install Sphinx dependencies
       - name: Install Sphinx dependencies
-        run: uv pip install -r build_docsite/requirements.txt
+        run: uv run pip install -r build_docsite/requirements.txt
 
       # 5. Build documentation
       - name: Build documentation
