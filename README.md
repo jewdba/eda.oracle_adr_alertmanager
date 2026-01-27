@@ -215,8 +215,3 @@ c.run(
 ## Changelog
 
 Please refer to [CHANGELOG.md](CHANGELOG.md) for details on what's changed in each release.
-
-# ToDo
-
-- Manage build GitHub CI + dic
-- Review galaxy.yml (git ignore)
