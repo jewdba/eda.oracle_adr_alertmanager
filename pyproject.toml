@@ -33,6 +33,7 @@ dev = [
   "black",
   "pre-commit",
   "antsibull-docs",
+  "sphinx-ansible-theme",
   "commitizen",
 ]
 

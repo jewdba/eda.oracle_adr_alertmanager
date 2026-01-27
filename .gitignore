@@ -23,9 +23,7 @@ tests/output
 .uv/
 uv.lock
 # Sphinx / Antsibull build output
-docs/build.sh
-docs/docsite/
-docs/.gitignore
-docs/requirements.txt
+docs/
+build_docsite/
 # Collection tarball
 *.tar.gz

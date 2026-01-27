@@ -8,8 +8,7 @@ authors:
 description: >
   Event-Driven Ansible (EDA) plugin to tail Oracle Automatic Diagnostic Repository (ADR) XML logfile
   and emit structured events based on regex pattern matching.
-license:
-  - MIT
+license: MIT
 license_file: LICENSE
 tags:
   - ansible-eda
@@ -18,7 +17,7 @@ tags:
   - automation
 dependencies: {}
 repository: "https://github.com/jewdba/oracle_adr_alertmanager"
-documentation: "README.md"
+documentation: "https://github.com/jewdba/oracle_adr_alertmanager#readme"
 homepage: "https://github.com/jewdba/oracle_adr_alertmanager"
 issues: "https://github.com/jewdba/oracle_adr_alertmanager/issues"
 
@@ -26,37 +25,30 @@ issues: "https://github.com/jewdba/oracle_adr_alertmanager/issues"
 build_ignore:
   # Editor / OS files
   - ".DS_Store"
-  - "**/.DS_Store"
-  # Cache and virtualenvs, Python egg‑info artifacts
+  # Cache, venvs, Python artifacts
   - ".venv"
-  - ".venv/**"
   - "__pycache__"
-  - "**/__pycache__"
   - "*.pyc"
   - "*.pyo"
-  - ".pytest_cache"
-  - ".pytest_cache/**"
-  - ".mypy_cache"
-  - ".mypy_cache/**"
-  - ".ruff_cache"
-  - ".ruff_cache/**"
   - "*.egg-info"
-  - "*.egg-info/**"
-
-  # Tests / docs not part of final collection
-  # Integration & sanity tests (ignore these)
-  #- "tests/integration/**"
-  #- "tests/sanity/**"
-  - "docs/**"
-  - "!docs/rst/**"
-
-  # IDE & config
-  - ".gitignore"
-  - ".pre-commit-config.yaml"
-  - ".vscode"
-  - ".vscode/**"
-  - ".github"
-  - ".github/**"
-  - ".pylintrc"
+  - ".pytest_cache"
+  - ".mypy_cache"
+  - ".ruff_cache"
+  - ".coverage"
+  - ".tox"
+  - "dist"
+  # Tests / tooling
+  - "tests"
+  - "package.json"
+  - "node_modules"
   - "pyproject.toml"
   - "uv.lock"
+  # IDE / CI
+  - "build_docsite"
+  - ".gitignore"
+  - ".github"
+  - ".vscode"
+  - ".pre-commit-config.yaml"
+  - ".pylintrc"
+  # Misc
+  - "CONTRIBUTING.md"

@@ -131,15 +131,15 @@ chore: update dependencies
 
 Validate commit messages with Commitizen:
 ```
-cz check
+uv run cz check
 ```
 
 Bump version changes (dry-run mode):
 ```
-cz bump --dry-run --yes
+uv run cz bump --dry-run --yes
 ```
 
-Commitizen changelog is generated automatically by GitHub CI workflow: [.github/workflows/build.yml](.github/workflows/build.yml)</u>
+Changelog is generated automatically using npm by the GitHub CI workflow: [.github/workflows/build.yml](.github/workflows/build.yml)
 
 ## Ansible-test
 
@@ -184,12 +184,23 @@ act \
 Test a specific workflow:
 ```
 export DOCKER_HOST=unix:///Users/jew/.rd/docker.sock
-act -W .github/workflows/release.yml \
+act -W .github/workflows/python-ci.yml \
   --container-daemon-socket - \
   -P ubuntu-latest=ghcr.io/catthehacker/ubuntu:act-latest \
-  --rm       
-```
+  --rm
 
+
+# Local act build test (Build preserved as filesystem bind-mounted)
+export DOCKER_HOST=unix:///Users/jew/.rd/docker.sock
+act -W .github/workflows/build.yml \
+  -e <(echo '{"env":{"ACT":"true"}}') \
+  --container-daemon-socket - \
+  --bind \
+  -P ubuntu-latest=ghcr.io/catthehacker/ubuntu:act-latest \
+  --rm
+
+
+```
 
 ______________________________________________________________________
 # Documentation
@@ -199,12 +210,12 @@ ______________________________________________________________________
 Initialize documentation:
 
 ```
-antsibull-docs sphinx-init --use-current --dest-dir docs jewdba.eda
+antsibull-docs sphinx-init --use-current --dest-dir build_docsite jewdba.eda
 ```
 
 **Note**: Generating documentation automatically may fail for EDA source plugins. Use a manual structure as a workaround:
 ```
-docs/docsite/rst
+build_docsite/rst
 ├── event_sources
 │   └── oracle_adr_alertmanager.html
 └── index.html
@@ -213,7 +224,7 @@ docs/docsite/rst
 Build the documentation:
 ```
 uv pip install -r docs/requirements.txt
-uv run sphinx-build -b html docs docs/docsite
+uv run sphinx-build -b html build_docsite docs/docsite
 ```
 
 Documenation is generated automatically by GitHub CI workflow [.github/workflows/build.yml](.github/workflows/build.yml)
