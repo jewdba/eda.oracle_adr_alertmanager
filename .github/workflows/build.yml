@@ -2,7 +2,7 @@ name: Build
 
 on:
   workflow_run:
-    workflows: ["release"]   # triggers after a release workflow completes
+    workflows: ["Python CI"]   # triggers after a release workflow completes
     types:
       - completed
   workflow_dispatch:
