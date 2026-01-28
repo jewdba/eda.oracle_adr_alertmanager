@@ -1,0 +1,42 @@
+name: Release
+
+on:
+  workflow_run:
+    workflows: ["Python CI"]
+    types:
+      - completed
+
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  bump-version-and-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python & uv
+        uses: ./.github/actions/python-setup
+
+      - name: Bump version & create tag
+        run: |
+          uv run cz bump --yes
+
+      - name: Update galaxy.yml
+        run: |
+          python scripts/update_galaxy_version.py galaxy.yml
+
+      - name: Commit bumped files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add galaxy.yml docs/docsite
+          git commit --no-verify -m "chore(release): update version $(cz version --short)" || echo "No changes to commit"
+
+      - name: Push commit and tags
+        run: |
+          git push origin HEAD
+          git push origin --tags

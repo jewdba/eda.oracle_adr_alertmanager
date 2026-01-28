@@ -24,9 +24,11 @@ dependencies = [
 [dependency-groups]
 dev = [
   "types-aiofiles",
+  "types-PyYAML",
   "pytest",
   "pytest-asyncio",
   "pytest-xdist",
+  "pyyaml",
   "ruff",
   "mypy",
   "pylint",
@@ -107,7 +109,7 @@ addopts = "-v"
 # -----------------------------
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "1.1.0"
+version = "0.0.0"
 tag_format = "v$version"
 update_changelog_on_bump = true
 version_scheme = "semver"

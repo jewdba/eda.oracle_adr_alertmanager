@@ -8,7 +8,7 @@ authors:
 description: >
   Event-Driven Ansible (EDA) plugin to tail Oracle Automatic Diagnostic Repository (ADR) XML logfile
   and emit structured events based on regex pattern matching.
-license: MIT
+license: "MIT"
 license_file: LICENSE
 tags:
   - ansible-eda
@@ -39,6 +39,7 @@ build_ignore:
   - "uv.lock"
   # IDE / CIs
   - "build_docsite"
+  - "build"
   - ".gitignore"
   - ".github"
   - ".vscode"

@@ -51,6 +51,6 @@ Requirements
 - ansible-core >=2.19
 - ansible-rulebook >= 1.2
 
-Version Added
--------------
-1.0.0
+Version
+-------
+[version]
