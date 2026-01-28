@@ -1,32 +1,29 @@
 name: Release
 
 on:
-  workflow_run:
-    workflows: ["Build"]
-    types:
-      - completed
+  push:
+    tags:
+      - "v*"
 
 permissions:
   contents: write
 
 jobs:
   release:
-    if: >
-      github.event.workflow_run.conclusion == 'success' &&
-      startsWith(github.event.workflow_run.head_branch, 'v')
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download Ansible collection artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: jewdba-eda
-          path: ./dist
+      - name: Setup Python & uv
+        uses: ./.github/actions/python-setup
+
+      # Rebuild for a clean, reproducible release
+      - name: Build Ansible collection
+        run: uv run ansible-galaxy collection build
 
       - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.event.workflow_run.head_branch }}
-          files: ./dist/jewdba-eda-*.tar.gz
+          tag_name: ${{ github.ref_name }}
+          files: jewdba-eda-*.tar.gz
