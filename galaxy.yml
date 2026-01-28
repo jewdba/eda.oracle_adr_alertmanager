@@ -1,14 +1,15 @@
----
 namespace: jewdba
 name: eda
-version: 1.0.0
+version: 0.0.9
 readme: README.md
 authors:
   - jewdba <https://github.com/jewdba>
-description: >
-  Event-Driven Ansible (EDA) plugin to tail Oracle Automatic Diagnostic Repository (ADR) XML logfile
-  and emit structured events based on regex pattern matching.
-license: "MIT"
+description:
+  "Event-Driven Ansible (EDA) plugin to tail Oracle Automatic Diagnostic
+  Repository (ADR) XML logfile and emit structured events based on regex pattern matching.
+
+  "
+license: MIT
 license_file: LICENSE
 tags:
   - ansible-eda
@@ -16,33 +17,26 @@ tags:
   - event-source
   - automation
 dependencies: {}
-repository: "https://github.com/jewdba/oracle_adr_alertmanager"
-documentation: "https://github.com/jewdba/oracle_adr_alertmanager#readme"
-homepage: "https://github.com/jewdba/oracle_adr_alertmanager"
-issues: "https://github.com/jewdba/oracle_adr_alertmanager/issues"
-
-# Exclude these patterns from the collection build artifact
+repository: https://github.com/jewdba/oracle_adr_alertmanager
+documentation: https://github.com/jewdba/oracle_adr_alertmanager#readme
+homepage: https://github.com/jewdba/oracle_adr_alertmanager
+issues: https://github.com/jewdba/oracle_adr_alertmanager/issues
 build_ignore:
-  # Editor / OS files
-  - ".DS_Store"
-  # Cache, venvs, Python artifacts
-  - ".venv"
-  - "__pycache__"
+  - .DS_Store
+  - .venv
+  - __pycache__
   - "*.egg-info"
-  - ".pytest_cache"
-  - ".mypy_cache"
-  - ".ruff_cache"
-  # Tests / tooling
-  - "tests"
-  - "package.json"
-  - "pyproject.toml"
-  - "uv.lock"
-  # IDE / CIs
-  - "build_docsite"
-  - "build"
-  - ".gitignore"
-  - ".github"
-  - ".vscode"
-  - ".pre-commit-config.yaml"
-  # Misc
-  - "CONTRIBUTING.md"
+  - .pytest_cache
+  - .mypy_cache
+  - .ruff_cache
+  - tests
+  - package.json
+  - pyproject.toml
+  - uv.lock
+  - build_docsite
+  - build
+  - .gitignore
+  - .github
+  - .vscode
+  - .pre-commit-config.yaml
+  - CONTRIBUTING.md

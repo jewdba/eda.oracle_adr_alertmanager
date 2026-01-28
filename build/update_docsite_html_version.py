@@ -16,7 +16,12 @@ def get_version() -> str:
         str: The current version string.
     """
     try:
-        version = subprocess.check_output(["cz", "version", "--short"], text=True).strip()
+        # Use universal_newlines for type checker compatibility
+        version_bytes = subprocess.check_output(
+            ["cz", "version", "--", "--short"],
+            universal_newlines=True,
+        )
+        version: str = version_bytes.strip()
         return version
     except subprocess.CalledProcessError as e:
         print("Error getting version from Commitizen:", e)
@@ -47,14 +52,26 @@ def update_html_version_directory(directory: str, new_version: str, placeholder:
             print(f"Failed to update {html_file}: {e}")
 
 
-if __name__ == "__main__":
+def main() -> None:
+    """
+    Main entry point for CLI usage.
+    """
     # CLI usage: python update_docsite_html_version.py <html_dir> [version] [placeholder_version]
     if len(sys.argv) < 2:
         print("Usage: python update_docsite_html_version.py <html_dir> [version] [placeholder_version]")
         sys.exit(1)
 
-    html_dir_cli = sys.argv[1]
-    version_cli = sys.argv[2] if len(sys.argv) > 2 else get_version()
-    placeholder_cli = sys.argv[3] if len(sys.argv) > 3 else "[version]"
+    html_dir_cli: str = sys.argv[1]
+    version_cli: str
+    if len(sys.argv) > 2 and sys.argv[2]:
+        version_cli = sys.argv[2]
+    else:
+        version_cli = get_version()
+
+    placeholder_cli: str = sys.argv[3] if len(sys.argv) > 3 else "[version]"
 
     update_html_version_directory(html_dir_cli, version_cli, placeholder_cli)
+
+
+if __name__ == "__main__":
+    main()

@@ -29,8 +29,7 @@ jobs:
           uv run cz bump --yes
 
       - name: Update galaxy.yml
-        run: |
-          python build/update_galaxy_version.py galaxy.yml
+        run: uv run python build/update_galaxy_version.py galaxy.yml
 
       - name: Commit bumped files
         run: |

@@ -220,3 +220,5 @@ Please refer to [CHANGELOG.md](CHANGELOG.md) for details on what's changed in ea
 -> Validate release name in TGZ
 
 -> Validate release in HTML
+
+- TEST !
