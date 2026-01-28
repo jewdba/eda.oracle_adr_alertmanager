@@ -216,5 +216,7 @@ c.run(
 
 Please refer to [CHANGELOG.md](CHANGELOG.md) for details on what's changed in each release.
 -> Fix pre-commit
+
 -> Validate release name in TGZ
+
 -> Validate release in HTML
