@@ -30,7 +30,7 @@ jobs:
 
       - name: Update galaxy.yml
         run: |
-          python scripts/update_galaxy_version.py galaxy.yml
+          python build/update_galaxy_version.py galaxy.yml
 
       - name: Commit bumped files
         run: |
