@@ -1,9 +1,8 @@
 name: Build & Ship
 
 on:
-  push:
-    tags:
-      - "v*"
+with:
+  tag_name: ${{ needs.release.outputs.tag }}
 
 permissions:
   contents: write
@@ -25,7 +24,7 @@ jobs:
       - name: Build documentation
         run: uv run sphinx-build -b html build_docsite docs/docsite
 
-      - name: Update HTML docs with new version
+      - name: Update HTML docs with version/tag
         run: uv run python build/update_html_version.py docs/docsite
 
       - name: Upload docs artifact
