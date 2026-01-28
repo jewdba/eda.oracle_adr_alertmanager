@@ -82,10 +82,10 @@ jobs:
       - name: Upload Ansible collection artifact
         uses: actions/upload-artifact@v4
         with:
-          name: jewdba-eda-${{ github.run_number }}"
+          name: "jewdba-eda-${{ github.run_number }}"
           path: "jewdba-eda-*.tar.gz"
           retention-days: 1
-              
+
       - name: Upload collection to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
