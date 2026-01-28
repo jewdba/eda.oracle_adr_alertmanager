@@ -1,12 +1,10 @@
 name: Build & Ship
 
 on:
-with:
-  tag_name: ${{ needs.release.outputs.tag }}
-
-permissions:
-  contents: write
-
+  workflow_run:
+    workflows: ["Release"]
+    types:
+      - completed
 jobs:
   build-docs:
     runs-on: ubuntu-latest
