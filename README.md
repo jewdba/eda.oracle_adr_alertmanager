@@ -220,7 +220,4 @@ Please refer to [CHANGELOG.md](CHANGELOG.md) for details on what's changed in ea
 
 -> Artifaxs
 -> release -> git tag P???
--> change build to remove docs as artifact
--> Move collection tgz to package
-
-asd
+-> Upload collection tgz to package ? do i need artifact ?
