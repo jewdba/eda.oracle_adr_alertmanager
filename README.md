@@ -218,6 +218,4 @@ Please refer to [CHANGELOG.md](CHANGELOG.md) for details on what's changed in ea
 
 # ToDO
 
--> Artifaxs
 -> release -> git tag P???
--> Upload collection tgz to package ? do i need artifact ?

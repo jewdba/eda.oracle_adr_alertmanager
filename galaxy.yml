@@ -28,27 +28,20 @@ build_ignore:
   # Cache, venvs, Python artifacts
   - ".venv"
   - "__pycache__"
-  - "*.pyc"
-  - "*.pyo"
   - "*.egg-info"
   - ".pytest_cache"
   - ".mypy_cache"
   - ".ruff_cache"
-  - ".coverage"
-  - ".tox"
-  - "dist"
   # Tests / tooling
   - "tests"
   - "package.json"
-  - "node_modules"
   - "pyproject.toml"
   - "uv.lock"
-  # IDE / CI
+  # IDE / CIs
   - "build_docsite"
   - ".gitignore"
   - ".github"
   - ".vscode"
   - ".pre-commit-config.yaml"
-  - ".pylintrc"
   # Misc
   - "CONTRIBUTING.md"
