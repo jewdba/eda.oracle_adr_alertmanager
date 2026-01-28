@@ -2,39 +2,32 @@ name: Python CI
 
 on:
   push:
-    branches: ["*"]
+    branches:
+      - "**"
     tags:
-      - 'v*.*.*'   # triggers on any semantic version tag
+      - "v*.*.*"
 
 jobs:
   pylint:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Python & uv
-        uses: ./.github/actions/python-setup
-      - name: Run pylint
-        run: uv run pylint plugins
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/python-setup
+      - run: uv run pylint plugins
 
   pytest:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Python & uv
-        uses: ./.github/actions/python-setup
-      - name: Run pytest
-        run: uv run pytest
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/python-setup
+      - run: uv run pytest
 
   ansible-sanity:
     needs: [pylint, pytest]
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Python & uv
-        uses: ./.github/actions/python-setup
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/python-setup
       - name: Create collection path
         run: |
           mkdir -p ansible_collections/jewdba/eda
@@ -42,14 +35,13 @@ jobs:
           mv !(ansible_collections) ansible_collections/jewdba/eda/
       - run: uv run ansible-test sanity
         working-directory: ansible_collections/jewdba/eda
+
   ansible-units:
     needs: [pylint, pytest]
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Python & uv
-        uses: ./.github/actions/python-setup
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/python-setup
       - name: Create collection path
         run: |
           mkdir -p ansible_collections/jewdba/eda
