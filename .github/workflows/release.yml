@@ -1,0 +1,30 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Checkout repo (needed for action context)
+      - uses: actions/checkout@v4
+
+      # 2. Download the collection artifact built in the build workflow
+      - name: Download Ansible collection artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: "jewdba-eda-${{ github.run_number }}"   # must match the artifact name
+          path: ./dist
+
+      # 3. Upload to GitHub Release
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          files: ./dist/jewdba-eda-*.tar.gz
