@@ -6,7 +6,6 @@ on:
     types:
       - completed
 
-
 permissions:
   contents: write
   actions: write
@@ -20,6 +19,10 @@ jobs:
 
       - name: Setup Python & uv
         uses: ./.github/actions/python-setup
+      - name: Set Git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Bump version & create tag
         run: |
@@ -31,9 +34,8 @@ jobs:
 
       - name: Commit bumped files
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add galaxy.yml docs/docsite
+          git add galaxy.yml
+          git add CHANGELOG.md
           git commit --no-verify -m "chore(release): update version $(cz version --short)" || echo "No changes to commit"
 
       - name: Push commit and tags
