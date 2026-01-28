@@ -1,41 +1,42 @@
 namespace: jewdba
 name: eda
-version: 4.12.1
+version: 0.0.1
 readme: README.md
 authors:
-- jewdba <https://github.com/jewdba>
-description: 'Event-Driven Ansible (EDA) plugin to tail Oracle Automatic Diagnostic
+  - jewdba <https://github.com/jewdba>
+description:
+  "Event-Driven Ansible (EDA) plugin to tail Oracle Automatic Diagnostic
   Repository (ADR) XML logfile and emit structured events based on regex pattern matching.
 
-  '
+  "
 license: MIT
 license_file: LICENSE
 tags:
-- ansible-eda
-- oracle
-- event-source
-- automation
+  - ansible-eda
+  - oracle
+  - event-source
+  - automation
 dependencies: {}
 repository: https://github.com/jewdba/oracle_adr_alertmanager
 documentation: https://github.com/jewdba/oracle_adr_alertmanager#readme
 homepage: https://github.com/jewdba/oracle_adr_alertmanager
 issues: https://github.com/jewdba/oracle_adr_alertmanager/issues
 build_ignore:
-- .DS_Store
-- .venv
-- __pycache__
-- '*.egg-info'
-- .pytest_cache
-- .mypy_cache
-- .ruff_cache
-- tests
-- package.json
-- pyproject.toml
-- uv.lock
-- build_docsite
-- build
-- .gitignore
-- .github
-- .vscode
-- .pre-commit-config.yaml
-- CONTRIBUTING.md
+  - .DS_Store
+  - .venv
+  - __pycache__
+  - "*.egg-info"
+  - .pytest_cache
+  - .mypy_cache
+  - .ruff_cache
+  - tests
+  - package.json
+  - pyproject.toml
+  - uv.lock
+  - build_docsite
+  - build
+  - .gitignore
+  - .github
+  - .vscode
+  - .pre-commit-config.yaml
+  - CONTRIBUTING.md
