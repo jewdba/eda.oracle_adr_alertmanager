@@ -41,6 +41,7 @@ jobs:
         with:
           name: docs
           path: docs/docsite
+          retention-days: 1
 
   build-ansible-collection:
     runs-on: ubuntu-latest
@@ -81,5 +82,5 @@ jobs:
       - name: Upload Ansible collection artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ansible-collection-${{ github.event.workflow_run.head_commit.message }}
+          name: ansible-collection-${{ github.run_number }}
           path: "jewdba-eda-*.tar.gz"
