@@ -22,11 +22,12 @@ jobs:
         run: uv run sphinx-build -b html build_docsite docs/docsite
       - name: Inject HTML docs version
         run: uv run python build/update_docsite_html_version.py docs/docsite
-      - name: Upload docs to Release
-        uses: softprops/action-gh-release@v2
+      - name: Upload docs artifact
+        uses: actions/upload-artifact@v4
         with:
-          tag_name: ${{ github.ref_name }}
-          files: docs/docsite/**
+          name: docs
+          path: docs/docsite
+
   build-collection:
     needs: build-docs
     runs-on: ubuntu-latest
@@ -55,6 +56,4 @@ jobs:
           files: |
             jewdba-eda-*.tar.gz
             CHANGELOG.md
-          body: |
-            Auto-generated release notes:
-            $(cat CHANGELOG.md)
+          body_path: CHANGELOG.md
