@@ -1,14 +1,16 @@
 name: Build & Ship
 
 on:
-  push:
-    tags:
-      - "v*.*.*"
+  workflow_run:
+    workflows: ["Auto tagging"]
+    types:
+      - completed
 
 permissions:
   contents: write
 jobs:
   build-docs:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     outputs:
       docs-path: docs/docsite
@@ -29,6 +31,7 @@ jobs:
           path: docs/docsite
 
   build-collection:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     needs: build-docs
     runs-on: ubuntu-latest
     steps:
