@@ -35,21 +35,37 @@ jobs:
           script: |
             const tag = process.env.TAG_NAME;
 
-            // Get the commit SHA to tag
+            // Determine branch ref
+            const branchRef = context.ref.startsWith('refs/heads/')
+              ? context.ref
+              : 'refs/heads/main';
+
             const { data: ref } = await github.rest.git.getRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: `heads/${context.ref.replace('refs/heads/', '')}`,
+              ref: branchRef,
             });
 
             const sha = ref.object.sha;
 
-            // Create tag ref
-            await github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: `refs/tags/${tag}`,
-              sha,
-            });
-
-            core.info(`Created tag ${tag} at ${sha}`);
+            // Check if tag exists
+            try {
+              await github.rest.git.getRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `refs/tags/${tag}`,
+              });
+              console.log(`Tag ${tag} already exists`);
+            } catch (error) {
+              if (error.status === 404) {
+                await github.rest.git.createRef({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  ref: `refs/tags/${tag}`,
+                  sha,
+                });
+                console.log(`Created tag ${tag} at ${sha}`);
+              } else {
+                throw error;
+              }
+            }
