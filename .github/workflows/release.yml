@@ -19,14 +19,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - uses: ./.github/actions/python-setup
-      - name: Extract version
-        id: cz_version
-        run: |
-          VERSION=$(uv run cz version -- --short)
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "Computed version: $VERSION"
-
       - uses: phish108/autotag-action@v1.1.64
         with:
           github-token: ${{ secrets.GITHUB_TOKEN}}
