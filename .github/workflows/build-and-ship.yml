@@ -46,6 +46,12 @@ jobs:
         run: uv run ansible-galaxy collection build
       - name: Upload collection to Release
         uses: softprops/action-gh-release@v2
-        files: |
-          jewdba-eda-*.tar.gz
-          CHANGELOG.md
+        with:
+          tag_name: ${{ steps.tag.outputs.new-tag }} # or your tag
+          name: Release ${{ steps.tag.outputs.new-tag }}
+          files: |
+            jewdba-eda-*.tar.gz
+            CHANGELOG.md
+          body: |
+            Auto-generated release notes:
+            $(cat CHANGELOG.md)
