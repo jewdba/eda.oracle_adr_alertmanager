@@ -27,7 +27,7 @@ def get_commitizen_version() -> str:
     try:
         # Use -- separator for Commitizen to accept extra git args like --short
         version_bytes = subprocess.check_output(
-            ["cz", "version", "--", "--short"],
+            ["cz", "version"],
             text=True,
         )
         version = version_bytes.strip()

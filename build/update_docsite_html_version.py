@@ -18,7 +18,7 @@ def get_version() -> str:
     try:
         # Use universal_newlines for type checker compatibility
         version_bytes = subprocess.check_output(
-            ["cz", "version", "--", "--short"],
+            ["cz", "version"],
             universal_newlines=True,
         )
         version: str = version_bytes.strip()
