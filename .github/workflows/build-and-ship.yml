@@ -54,11 +54,18 @@ jobs:
 
       - name: Build Ansible collection
         run: uv run ansible-galaxy collection build
+
+      - name: Commitzen version
+        id: cz
+        run: |
+          TAG=$(uv run cz version)
+          echo "TAG=$TAG" >> $GITHUB_ENV
+          echo "Version=$TAG"
       - name: Upload collection to Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref_name }}
-          name: Release ${{ github.ref_name }}
+          tag_name: ${{ env.TAG }}
+          name: Release ${{ env.TAG }}
           files: |
             jewdba-eda-*.tar.gz
             CHANGELOG.md

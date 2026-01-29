@@ -214,12 +214,7 @@ c.run(
 Please refer to [CHANGELOG.md](CHANGELOG.md) for details on what's changed in each release.
 
 ## RoadMap
--> Validate release name in TGZ
-
--> Validate release in HTML
-
--> ReadMe
-
+-> Add changh
+-> ReadMe cleanup 
 -> TEST !
-
 -> Galaxy

@@ -29,12 +29,13 @@ jobs:
         run: |
           TAG=$(uv run cz version)
           echo "TAG=$TAG" >> $GITHUB_ENV
-          echo "Next version will be $TAG"
+          echo "Version=$TAG"
 
       - name: Create tag automatically
         uses: rickstaa/action-create-tag@v1.7.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ env.TAG }}
+          tag_prefix: "v"
           message: "Release ${{ env.TAG }}"
           force_push_tag: true
