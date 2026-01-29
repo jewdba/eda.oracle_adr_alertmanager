@@ -32,7 +32,7 @@ jobs:
           echo "Next version will be $TAG"
 
       - name: Create tag automatically
-        uses: phish108/autotag-action@v1.1.55
+        uses: phish108/autotag-action@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           with-v: true
