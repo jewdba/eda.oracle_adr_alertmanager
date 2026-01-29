@@ -27,8 +27,7 @@ jobs:
           VERSION=$(uv run cz version)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-       - uses: Klemensas/action-autotag@stable
+      - uses: Klemensas/action-autotag@stable
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ steps.cz_version.outputs.version }}
-
