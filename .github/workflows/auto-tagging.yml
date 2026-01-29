@@ -1,9 +1,13 @@
-name: Auto tagging
+name: Auto Tagging
+
 on:
   workflow_run:
     workflows: ["Python CI"]
     types:
       - completed
+  push:
+    branches:
+      - main
 
 permissions:
   contents: write
