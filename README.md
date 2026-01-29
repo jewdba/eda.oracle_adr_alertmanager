@@ -4,9 +4,6 @@
 
 ![Version](https://img.shields.io/github/v/release/jewdba/eda.oracle_adr_alertmanager)
 ![GitHub issues](https://img.shields.io/github/issues/jewdba/eda.oracle_adr_alertmanager)
-
-<!-- Language / License -->
-
 ![Python](https://img.shields.io/github/languages/top/jewdba/eda.oracle_adr_alertmanager)
 ![License](https://img.shields.io/github/license/jewdba/eda.oracle_adr_alertmanager)
 
