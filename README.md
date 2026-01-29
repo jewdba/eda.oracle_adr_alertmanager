@@ -215,10 +215,12 @@ c.run(
 ## Changelog
 
 Please refer to [CHANGELOG.md](CHANGELOG.md) for details on what's changed in each release.
--> Fix pre-commit
 
+## RoadMap
+
+-> Remove CHANGE LOG from commit put it in build
+-> bump if no tags exists ?
 -> Validate release name in TGZ
-
 -> Validate release in HTML
-
-- TEST !
+-> TEST !
+-> Galaxy

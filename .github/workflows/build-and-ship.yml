@@ -24,7 +24,7 @@ jobs:
       - name: Build documentation
         run: uv run sphinx-build -b html build_docsite docs/docsite
 
-      - name: Update HTML docs with version/tag
+      - name: Inject g HTML docs version (git tag)
         run: uv run python build/update_docsite_html_version.py docs/docsite
 
       - name: Upload docs artifact
@@ -48,7 +48,8 @@ jobs:
         with:
           name: docs
           path: docs/docsite
-
+      - name: Inject galaxy.yml version (git tag)
+        run: uv run python build/update_galaxy_version.py galaxy.yml
       - name: Build Ansible collection
         run: uv run ansible-galaxy collection build
 

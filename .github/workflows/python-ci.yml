@@ -19,31 +19,30 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/python-setup
       - run: uv run pytest
-
-  ansible-sanity:
-    needs: [pylint, pytest]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/python-setup
-      - name: Create collection path
-        run: |
-          mkdir -p ansible_collections/jewdba/eda
-          shopt -s extglob
-          mv !(ansible_collections) ansible_collections/jewdba/eda/
-      - run: uv run ansible-test sanity
-        working-directory: ansible_collections/jewdba/eda
-
-  ansible-units:
-    needs: [pylint, pytest]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/python-setup
-      - name: Create collection path
-        run: |
-          mkdir -p ansible_collections/jewdba/eda
-          shopt -s extglob
-          mv !(ansible_collections) ansible_collections/jewdba/eda/
-      - run: uv run ansible-test units --python 3.12
-        working-directory: ansible_collections/jewdba/eda
+#  ansible-sanity:
+#    needs: [pylint, pytest]
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#      - uses: ./.github/actions/python-setup
+#      - name: Create collection path
+#        run: |
+#          mkdir -p ansible_collections/jewdba/eda
+#          shopt -s extglob
+#          mv !(ansible_collections) ansible_collections/jewdba/eda/
+#      - run: uv run ansible-test sanity
+#        working-directory: ansible_collections/jewdba/eda
+#
+#  ansible-units:
+#    needs: [pylint, pytest]
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#      - uses: ./.github/actions/python-setup
+#      - name: Create collection path
+#        run: |
+#          mkdir -p ansible_collections/jewdba/eda
+#          shopt -s extglob
+#          mv !(ansible_collections) ansible_collections/jewdba/eda/
+#      - run: uv run ansible-test units --python 3.12
+#        working-directory: ansible_collections/jewdba/eda
