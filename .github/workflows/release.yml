@@ -25,7 +25,12 @@ jobs:
         run: |
           VERSION=$(uv run cz version -- --short)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Computed version: $VERSION"
 
       - uses: phish108/autotag-action@v1.1.64
         with:
           github-token: ${{ secrets.GITHUB_TOKEN}}
+          with-v: "true"
+          version: ${{ steps.cz_version.outputs.version }}
+          tag-message: "Release v${{ steps.cz_version.outputs.version }}"
+          changelog-structure: "git-commits"
