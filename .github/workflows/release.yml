@@ -1,6 +1,9 @@
-name: Create tag
+name: Creeate release upon git tag
 
 on:
+  push:
+    branches:
+      - main
   workflow_run:
     workflows: ["Python CI"]
     types:
@@ -11,7 +14,7 @@ permissions:
   actions: write
 
 jobs:
-  bump-version-and-tag:
+  auto-tag:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
