@@ -36,6 +36,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ env.TAG }}
-          tag_prefix: "v"
           message: "Release ${{ env.TAG }}"
           force_push_tag: true

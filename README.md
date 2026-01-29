@@ -211,10 +211,10 @@ c.run(
 
 ## Changelog
 
-Please refer to [CHANGELOG.md](CHANGELOG.md) for details on what's changed in each release.
+Please refer to [CHANGELOG.md](https://github.com/jewdba/eda.oracle_adr_alertmanager/releases/latest) for details on what's changed in each release.
 
 ## RoadMap
--> Add changh
--> ReadMe cleanup 
+-> Add changelog properly 
+
 -> TEST !
 -> Galaxy

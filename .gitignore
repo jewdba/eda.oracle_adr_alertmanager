@@ -26,3 +26,4 @@ uv.lock
 docs/
 # Collection tarball
 *.tar.gz
+CHANGELOG.md

@@ -32,6 +32,7 @@ jobs:
         with:
           name: docs
           path: docs/docsite
+          retention-days: 1
 
   build-collection:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
@@ -55,12 +56,44 @@ jobs:
       - name: Build Ansible collection
         run: uv run ansible-galaxy collection build
 
+      - name: Upload CHANGELOG artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: changelog
+          path: CHANGELOG.md
+          retention-days: 1
+      - name: Upload collection artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: jewdba-eda-ansible-collection
+          path: jewdba-eda-*.tar.gz
+          retention-days: 1
+  release:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    needs: build-collection
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python & uv
+        uses: ./.github/actions/python-setup
       - name: Commitzen version
         id: cz
         run: |
           TAG=$(uv run cz version)
           echo "TAG=$TAG" >> $GITHUB_ENV
           echo "Version=$TAG"
+
+      - name: Download collection artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: jewdba-eda-ansible-collection
+          path: .
+
+      - name: Download CHANGELOG artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: changelog
+          path: .
       - name: Upload collection to Release
         uses: softprops/action-gh-release@v2
         with:
