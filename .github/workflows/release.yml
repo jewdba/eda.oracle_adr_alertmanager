@@ -20,15 +20,12 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
       - uses: ./.github/actions/python-setup
-
-      - name: Get version from Commitizen
+      - name: Extract version
         id: cz_version
         run: |
-          VERSION=$(uv run cz version)
-          echo "::set-output name=version::$VERSION"
+          VERSION=$(uv run cz version -- --short)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-      - uses: Klemensas/action-autotag@stable
+      - uses: phish108/autotag-action@v1.1.64
         with:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          version: ${{ steps.cz_version.outputs.version }}
-          tag_prefix: "v"
+          github-token: ${{ secrets.GITHUB_TOKEN}}

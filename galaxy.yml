@@ -30,7 +30,6 @@ build_ignore:
   - .mypy_cache
   - .ruff_cache
   - tests
-  - package.json
   - pyproject.toml
   - uv.lock
   - build_docsite
