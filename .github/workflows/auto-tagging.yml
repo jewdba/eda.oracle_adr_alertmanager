@@ -31,29 +31,9 @@ jobs:
           echo "TAG=$TAG" >> $GITHUB_ENV
           echo "Next version will be $TAG"
 
-      - name: Check if tag exists
-        uses: actions/github-script@v8
-        env:
-          TAG_NAME: v${{ env.TAG }}
+      - name: Create tag automatically
+        uses: phish108/autotag-action@v1.1.55
         with:
-          script: |
-            const tag = process.env.TAG_NAME;
-            const core = require('@actions/core');
-
-            try {
-              await github.rest.git.getRef({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                ref: `tags/${tag}`
-              });
-              console.log(`Tag ${tag} already exists.`);
-              core.setOutput('exists', 'true');  // set output for later steps
-            } catch (error) {
-              if (error.status === 404) {
-                console.log(`Tag ${tag} does not exist. Will create it.`);
-                core.setOutput('exists', 'false');
-              } else {
-                throw error;
-              }
-            }
-          result-encoding: string
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          with-v: true
+          tag: ${{ env.TAG }}
