@@ -1,6 +1,7 @@
 name: Auto Tagging
 
 on:
+  workflow_dispatch: {}
   workflow_run:
     workflows: ["Python CI"]
     types:
