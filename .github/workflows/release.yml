@@ -20,6 +20,14 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: Klemensas/action-autotag@stable
-        with:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      #- uses: Klemensas/action-autotag@stable
+      #  with:
+      #    GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Set Git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Create SemVer tag with Commitizen
+        run: uv run cz bump --yes --no-verify
