@@ -2,10 +2,14 @@ name: Build & Ship
 
 on:
   push:
-    tags:
-      - "v*.*.*"
+    branches:
+      - main
+  workflow_run:
+    workflows: ["Python CI"]
+    types:
+      - completed
 
-jobs:
+jobs
   build-docs:
     runs-on: ubuntu-latest
     outputs:
@@ -41,14 +45,14 @@ jobs:
       - name: Inject galaxy.yml version
         run: uv run python build/update_galaxy_version.py galaxy.yml
       - name: Generate CHANGELOG
-        run: uv run cz bump ${{ steps.tag.outputs.new-tag }} --yes --changelog
+        run: uv run cz bump ${{ github.ref_name }} --yes --changelog
       - name: Build Ansible collection
         run: uv run ansible-galaxy collection build
       - name: Upload collection to Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ steps.tag.outputs.new-tag }}
-          name: Release ${{ steps.tag.outputs.new-tag }}
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
           files: |
             jewdba-eda-*.tar.gz
             CHANGELOG.md

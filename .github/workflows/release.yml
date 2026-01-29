@@ -1,9 +1,5 @@
-name: Auto-Tagging
-
+name: Create Release
 on:
-  push:
-    branches:
-      - main
   workflow_run:
     workflows: ["Python CI"]
     types:
@@ -14,12 +10,30 @@ permissions:
   actions: write
 
 jobs:
-  auto-tag:
+  release:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
-      - uses: phish108/autotag-action@v1.1.64
+
+      - name: Setup Python & uv
+        uses: ./.github/actions/python-setup
+
+      - name: Commitzen version
+        id: cz
+        run: |
+          TAG=$(uv run cz version)
+          echo "NEXT_TAG=$NEXT_TAG" >> $GITHUB_ENV
+          echo "Next version will be $NEXT_TAG"
+
+      - name: Generate changelog
+        run: uv run cz changelog --file-name CHANGELOG.md
+
+      - name: Tag & push
+        uses: git-tools/tag@v1
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN}}
-          with-v: "true"
+          tag: "${{ env.NEXT_TAG }}"
+          push: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
