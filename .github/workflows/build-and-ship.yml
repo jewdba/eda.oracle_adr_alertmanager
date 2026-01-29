@@ -5,6 +5,9 @@ on:
     workflows: ["Auto tagging"]
     types:
       - completed
+  push:
+    branches:
+      - main
 
 permissions:
   contents: write

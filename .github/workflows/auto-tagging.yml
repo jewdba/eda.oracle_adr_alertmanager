@@ -32,8 +32,9 @@ jobs:
           echo "Next version will be $TAG"
 
       - name: Create tag automatically
-        uses: phish108/autotag-action@v1.1.64
+        uses: rickstaa/action-create-tag@v1.7.2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          with-v: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ env.TAG }}
+          message: "Release ${{ env.TAG }}"
+          force_push_tag: true
