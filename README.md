@@ -215,7 +215,11 @@ Please refer to [CHANGELOG.md](CHANGELOG.md) for details on what's changed in ea
 
 ## RoadMap
 -> Validate release name in TGZ
+
 -> Validate release in HTML
+
 -> ReadMe
--> TEST ! 
+
+-> TEST !
+
 -> Galaxy
