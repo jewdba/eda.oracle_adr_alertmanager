@@ -31,56 +31,29 @@ jobs:
           echo "TAG=$TAG" >> $GITHUB_ENV
           echo "Next version will be $TAG"
 
-      - name: Create and push tag
+      - name: Check if tag exists
         uses: actions/github-script@v8
         env:
           TAG_NAME: v${{ env.TAG }}
         with:
           script: |
             const tag = process.env.TAG_NAME;
+            const core = require('@actions/core');
 
             try {
-              // First, try to get the tag reference
-              const { data: existingTag } = await github.rest.git.getRef({
+              await github.rest.git.getRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                ref: `refs/tags/${tag}`,
+                ref: `tags/${tag}`
               });
-
-              core.info(`Tag ${tag} already exists at ${existingTag.object.sha}`);
-              
-              // Delete the existing tag if it exists
-              await github.rest.git.deleteRef({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                ref: `refs/tags/${tag}`,
-              });
-              core.info(`Deleted existing tag ${tag}`);
-              
+              console.log(`Tag ${tag} already exists.`);
+              core.setOutput('exists', 'true');  // set output for later steps
             } catch (error) {
-              // If tag doesn't exist, error status will be 404, so just proceed with tag creation
-              if (error.status !== 404) {
-                core.setFailed(`Error while checking tag: ${error.message}`);
-                return;
+              if (error.status === 404) {
+                console.log(`Tag ${tag} does not exist. Will create it.`);
+                core.setOutput('exists', 'false');
+              } else {
+                throw error;
               }
-              core.info(`Tag ${tag} does not exist, proceeding to create`);
             }
-
-            // Get the latest commit (HEAD) on the main branch
-            const { data: branch } = await github.rest.repos.getBranch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              branch: "main"  // Use the main branch (or any other branch if needed)
-            });
-
-            const sha = branch.commit.sha;
-
-            // Create the tag ref
-            await github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: `refs/tags/${tag}`,
-              sha,
-            });
-
-            core.info(`Created or updated tag ${tag} at ${sha}`);
+          result-encoding: string
