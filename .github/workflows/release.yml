@@ -24,8 +24,8 @@ jobs:
         id: cz
         run: |
           TAG=$(uv run cz version)
-          echo "NEXT_TAG=$NEXT_TAG" >> $GITHUB_ENV
-          echo "Next version will be $NEXT_TAG"
+          echo "TAG=$TAG" >> $GITHUB_ENV
+          echo "Next version will be $TAG"
 
       - name: Generate changelog
         run: uv run cz changelog --file-name CHANGELOG.md
@@ -33,7 +33,7 @@ jobs:
       - name: Tag & push
         uses: git-tools/tag@v1
         with:
-          tag: "${{ env.NEXT_TAG }}"
+          tag: "v${{ env.TAG }}"
           push: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

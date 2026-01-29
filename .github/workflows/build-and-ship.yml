@@ -2,14 +2,12 @@ name: Build & Ship
 
 on:
   push:
-    branches:
-      - main
-  workflow_run:
-    workflows: ["Python CI"]
-    types:
-      - completed
+    tags:
+      - "v*.*.*"
 
-jobs
+permissions:
+  contents: write
+jobs:
   build-docs:
     runs-on: ubuntu-latest
     outputs:
@@ -29,7 +27,6 @@ jobs
         with:
           tag_name: ${{ github.ref_name }}
           files: docs/docsite/**
-
   build-collection:
     needs: build-docs
     runs-on: ubuntu-latest
@@ -44,8 +41,10 @@ jobs
           path: docs/docsite
       - name: Inject galaxy.yml version
         run: uv run python build/update_galaxy_version.py galaxy.yml
+
       - name: Generate CHANGELOG
-        run: uv run cz bump ${{ github.ref_name }} --yes --changelog
+        run: uv run cz changelog --file-name CHANGELOG.md
+
       - name: Build Ansible collection
         run: uv run ansible-galaxy collection build
       - name: Upload collection to Release
