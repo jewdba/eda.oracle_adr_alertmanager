@@ -1,7 +1,6 @@
 name: Build & Ship
 
 on:
-  workflow_dispatch: {}
   workflow_run:
     workflows: ["Auto tagging"]
     types:
