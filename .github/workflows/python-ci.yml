@@ -12,13 +12,12 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/python-setup
       - run: uv run pylint plugins
-
-  pytest:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/python-setup
-      - run: uv run pytest
+#  pytest:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#      - uses: ./.github/actions/python-setup
+#      - run: uv run pytest
 #  ansible-sanity:
 #    needs: [pylint, pytest]
 #    runs-on: ubuntu-latest

@@ -19,6 +19,7 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+      - uses: ./.github/actions/python-setup
 
       #- uses: Klemensas/action-autotag@stable
       #  with:
