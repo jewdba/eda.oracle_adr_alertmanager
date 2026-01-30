@@ -214,7 +214,7 @@ c.run(
 Please refer to [CHANGELOG.md](https://github.com/jewdba/eda.oracle_adr_alertmanager/releases/latest) for details on what's changed in each release.
 
 ## RoadMap
--> Add changelog properly 
-
+-> tag is never incremented ;)
+-> Chanlog Diff + full
 -> TEST !
 -> Galaxy
