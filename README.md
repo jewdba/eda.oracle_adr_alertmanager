@@ -216,5 +216,5 @@ Please refer to [CHANGELOG.md](https://github.com/jewdba/eda.oracle_adr_alertman
 ## RoadMap
 -> tag is never incremented ;)
 -> Chanlog Diff + full
--> TEST !
+-> TEST!
 -> Galaxy
