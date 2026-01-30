@@ -97,6 +97,9 @@ jobs:
         with:
           name: changelog
           path: .
+
+      - name: Generate Release CHANGELOG delta
+        run: uv run cz changelog --incremental --file-name CHANGELOG_DELTA.md
       - name: Upload collection to Release
         uses: softprops/action-gh-release@v2
         with:
@@ -105,4 +108,4 @@ jobs:
           files: |
             jewdba-eda-*.tar.gz
             CHANGELOG.md
-          body_path: CHANGELOG.md
+          body_path: CHANGELOG_DELTA.md
