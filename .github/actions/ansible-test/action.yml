@@ -4,7 +4,8 @@ runs:
   using: "composite"
   steps:
     - uses: actions/checkout@v4
-    - uses: ./.github/actions/ci-setup
+    - name: Setup Python & uv
+      uses: ./.github/actions/ci-setup
     - name: Create collection path
       run: |
         mkdir -p ansible_collections/jewdba/eda
