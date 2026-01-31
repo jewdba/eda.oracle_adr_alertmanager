@@ -10,7 +10,6 @@ permissions:
 
 jobs:
   build-docs:
-    if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
@@ -34,7 +33,6 @@ jobs:
 
   build-collection:
     needs: build-docs
-    if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
