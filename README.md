@@ -202,4 +202,7 @@ Please refer to [CHANGELOG.md](CHANGELOG.md) for details on what's changed in ea
 ## RoadMap
 
 -> Contrib relman (git commit + bump + gush code and tag)
+cz bump
+git tag v0.7.0
+git push origin v0.7.0
 -> Galaxy uplaod
