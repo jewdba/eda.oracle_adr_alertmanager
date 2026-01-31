@@ -29,7 +29,7 @@ jobs:
         with:
           test-type: pytest
 
-  ansible-sanity:
+  ansible-test-sanity:
     needs: [pylint, pytest]
     runs-on: ubuntu-latest
     steps:
@@ -39,7 +39,7 @@ jobs:
         with:
           test-type: sanity
 
-  ansible-units:
+  ansible-test-units:
     needs: [pylint, pytest]
     runs-on: ubuntu-latest
     steps:

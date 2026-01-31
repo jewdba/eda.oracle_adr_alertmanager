@@ -9,16 +9,26 @@ permissions:
   contents: write
 
 jobs:
-  python-ci:
+  ansible-tests-sanity:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v4
+      - name: Setup Python & uv
+        uses: ./.github/actions/ci-setup
+      - uses: ./.github/actions/ansible-test
+        with:
+          test-type: sanity
 
-      - name: Trigger Python CI workflow
-        uses: ./.github/workflows/python-ci.yml
+  ansible-test-units:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Python & uv
+        uses: ./.github/actions/ci-setup
+      - uses: ./.github/actions/ansible-test
+        with:
+          test-type: units
+          extra-args: "--python 3.12"
   build-docs:
-    needs: python-ci
+    needs: [ansible-test-sanity, ansible-test-units]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
