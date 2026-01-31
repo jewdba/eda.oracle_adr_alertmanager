@@ -12,6 +12,8 @@ jobs:
   ansible-test-sanity:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
       - name: Setup Python & uv
         uses: ./.github/actions/ci-setup
       - uses: ./.github/actions/ansible-test
@@ -21,6 +23,8 @@ jobs:
   ansible-test-units:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
       - name: Setup Python & uv
         uses: ./.github/actions/ci-setup
       - uses: ./.github/actions/ansible-test
