@@ -16,8 +16,6 @@ jobs:
     needs: python-ci
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v4
       - name: Setup Python & uv
         uses: ./.github/actions/ci-setup
       - name: Install Sphinx dependencies
@@ -37,10 +35,6 @@ jobs:
     needs: build-docs
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - name: Setup Python & uv
         uses: ./.github/actions/ci-setup
       - name: Download docs artifact
@@ -63,10 +57,6 @@ jobs:
     needs: build-collection
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - name: Setup Python & uv
         uses: ./.github/actions/ci-setup
       - name: Download collection artifact
