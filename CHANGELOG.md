@@ -1,3 +1,10 @@
+## v0.3.1 (2026-01-31)
+
+### Fix
+
+- **api**: patch pipeline
+- **api**: patch pipeline
+
 ## v0.3.0 (2026-01-31)
 
 ### Feat
