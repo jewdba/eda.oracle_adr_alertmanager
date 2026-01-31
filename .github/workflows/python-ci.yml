@@ -13,6 +13,8 @@ jobs:
   pylint:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
       - name: Setup Python & uv
         uses: ./.github/actions/ci-setup
       - uses: ./.github/actions/python-test
@@ -23,6 +25,8 @@ jobs:
   pytest:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
       - name: Setup Python & uv
         uses: ./.github/actions/ci-setup
       - uses: ./.github/actions/python-test
