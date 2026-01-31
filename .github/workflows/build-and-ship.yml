@@ -26,10 +26,10 @@ jobs:
         uses: ./.github/actions/python-setup
 
       - name: Install Sphinx dependencies
-        run: uv run pip install -r build_docsite/requirements.txt
+        run: uv run pip install -r build/docsite/requirements.txt
 
       - name: Build documentation
-        run: uv run sphinx-build -b html build_docsite docs/docsite
+        run: uv run sphinx-build -b html build/docsite docs/docsite
 
       - name: Inject HTML docs version
         run: uv run python build/update_docsite_html_version.py docs/docsite

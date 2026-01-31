@@ -210,7 +210,7 @@ ______________________________________________________________________
 Initialize documentation:
 
 ```
-antsibull-docs sphinx-init --use-current --dest-dir build_docsite jewdba.eda
+antsibull-docs sphinx-init --use-current --dest-dir build/docsite jewdba.eda
 ```
 
 **Note**: Generating documentation automatically may fail for EDA source plugins. Use a manual structure as a workaround:
@@ -223,8 +223,8 @@ build_docsite/rst
 
 Build the documentation:
 ```
-uv pip install -r docs/requirements.txt
-uv run sphinx-build -b html build_docsite docs/docsite
+uv pip install -r build/docsite/requirements.txt
+uv run sphinx-build -b html build/docsite docs/docsite
 ```
 
 Documenation is generated automatically by GitHub CI workflow [.github/workflows/build.yml](.github/workflows/build.yml)

@@ -32,7 +32,6 @@ build_ignore:
   - tests
   - pyproject.toml
   - uv.lock
-  - build_docsite
   - build
   - .gitignore
   - .github
