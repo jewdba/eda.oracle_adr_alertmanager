@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  ansible-tests-sanity:
+  ansible-test-sanity:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Python & uv
