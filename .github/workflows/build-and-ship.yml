@@ -10,7 +10,13 @@ permissions:
 
 jobs:
   python-ci:
-    uses: ./.github/workflows/python-ci.yml
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run custom action
+        uses: ./.github/actions/ci-setup
 
   build-docs:
     needs: python-ci
