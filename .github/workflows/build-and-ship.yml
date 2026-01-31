@@ -1,10 +1,6 @@
 name: Build & Ship
 
 on:
-  workflow_run:
-    workflows: ["Python CI"]
-    types:
-      - completed
   push:
     tags:
       - "v*.*.*"
@@ -55,16 +51,8 @@ jobs:
           path: docs/docsite
       - name: Inject galaxy.yml version
         run: uv run python build/update_galaxy_version.py ${GITHUB_REF_NAME#v}
-      - name: Generate CHANGELOG
-        run: uv run cz changelog --file-name CHANGELOG.md
       - name: Build Ansible collection
         run: uv run ansible-galaxy collection build
-      - name: Upload CHANGELOG artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: changelog
-          path: CHANGELOG.md
-          retention-days: 1
       - name: Upload collection artifact
         uses: actions/upload-artifact@v4
         with:
@@ -87,11 +75,6 @@ jobs:
         with:
           name: jewdba-eda-ansible-collection
           path: dist
-      - name: Download CHANGELOG artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: changelog
-          path: .
       - name: Fetch all tags
         run: git fetch --tags
       - name: Generate Release CHANGELOG delta
