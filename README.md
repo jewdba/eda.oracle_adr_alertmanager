@@ -218,5 +218,6 @@ Please refer to [CHANGELOG.md](CHANGELOG.md) for details on what's changed in ea
 
 ## RoadMap
 
+-> Contrib relman (git commit + bump + gush code and tag)
 -> Check versiob of dic
 -> Galaxy uplaod
