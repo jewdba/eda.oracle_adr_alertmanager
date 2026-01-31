@@ -13,6 +13,9 @@ jobs:
   pylint:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
       - uses: ./.github/actions/python-test
         with:
           test-type: pylint
@@ -21,6 +24,8 @@ jobs:
   pytest:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
       - uses: ./.github/actions/python-test
         with:
           test-type: pytest
@@ -29,6 +34,8 @@ jobs:
     needs: [pylint, pytest]
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
       - uses: ./.github/actions/ansible-test
         with:
           test-type: sanity
@@ -37,6 +44,8 @@ jobs:
     needs: [pylint, pytest]
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
       - uses: ./.github/actions/ansible-test
         with:
           test-type: units
