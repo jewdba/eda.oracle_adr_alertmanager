@@ -59,8 +59,8 @@ A Python asynchronous tool to **tail Oracle Diagnostic Repository XML logfile**,
 
 ### Event Payload example @ Oracle DataBase Listener
 
-\`\`
-\*\* 2026-01-27 20:14:06.186284 [event] \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+```
+** 2026-01-27 20:14:06.186284 [event] ***************************************************************************************************
 {'adr_home': '/u01/app/grid/diag/tnslsnr/svl-ch-ora001t/listener',
 'comp_id': 'tnslsnr',
 'host_addr': '192.168.1.135',
@@ -68,7 +68,7 @@ A Python asynchronous tool to **tail Oracle Diagnostic Repository XML logfile**,
 'level': '16',
 'message': '27-JAN-2026 19:14:05 * '
 '(CONNECT_DATA=(SERVICE_NAME=RCATZ_APP_001I.db.jewlab.oraclevcn.com)(CID=(PROGRAM=sqlplus@bastion)(HOST=bastion)(USER=oracle))(CONNECTION_ID=SWRtVfnYg4XgY1kAqMAcfw==)) '
-'\* (ADDRESS=(PROTOCOL=tcp)(HOST=192.168.0.89)(PORT=47556)) * '
+'* (ADDRESS=(PROTOCOL=tcp)(HOST=192.168.0.89)(PORT=47556)) * '
 'establish * RCATZ_APP_001I.db.jewlab.oraclevcn.com * 12514',
 'meta': {'received_at': '2026-01-27T19:14:06.184614Z',
 'source': {'name': 'jewdba.eda.oracle_adr_alertmanager',
@@ -76,13 +76,11 @@ A Python asynchronous tool to **tail Oracle Diagnostic Repository XML logfile**,
 'uuid': 'c8ed1c11-9016-45e9-9961-c2ca3b6ea71c'},
 'msg_type': 'UNKNOWN',
 'org_id': 'oracle',
-'pattern': 'TNS-[0-9]{5}|\\s\\\*\\s+[0-9]{5}',
+'pattern': 'TNS-[0-9]{5}|\s*\s+[0-9]{5}',
 'pid': '9133',
 'time': '2026-01-27T19:14:05.205+00:00'}
 
-______________________________________________________________________
-
-\*\* 2026-01-27 20:14:06.188081 [event] \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+** 2026-01-27 20:14:06.188081 [event] ***************************************************************************************************
 {'adr_home': '/u01/app/grid/diag/tnslsnr/svl-ch-ora001t/listener',
 'comp_id': 'tnslsnr',
 'host_addr': '192.168.1.135',
@@ -96,9 +94,10 @@ ______________________________________________________________________
 'uuid': '155c1bc0-c29a-4d9a-b191-907a73b189cc'},
 'msg_type': 'UNKNOWN',
 'org_id': 'oracle',
-'pattern': 'TNS-[0-9]{5}|\\s\\\*\\s+[0-9]{5}',
+'pattern': 'TNS-[0-9]{5}|\s*\s+[0-9]{5}',
 'pid': '9133',
 'time': '2026-01-27T19:14:05.206+00:00'}
+```
 
 ______________________________________________________________________
 
@@ -133,7 +132,7 @@ ______________________________________________________________________
     - jewdba.eda.oracle_adr_alertmanager:
         delay: 1
         adr_home: "/u01/app/grid/diag/tnslsnr/svl-ch-ora001t/listener"
-        pattern: "TNS-[0-9]{5}|\\s\\*\\s+[0-9]{5}"
+        pattern: "TNS-[0-9]{5}|\\s\*\\s+[0-9]{5}"
 
   rules:
     - name: Print errors 
@@ -215,7 +214,7 @@ c.run(
 
 ## Changelog
 
-Please refer to [CHANGELOG.md](https://github.com/jewdba/eda.oracle_adr_alertmanager/releases/latest) for details on what's changed in each release.
+Please refer to [CHANGELOG.md](CHANGELOG.md) for details on what's changed in each release.
 
 ## RoadMap
 
