@@ -36,7 +36,3 @@ runs:
         pip install uv
         uv sync --all-extras
       shell: bash
-
-    - name: Activate virtual environment for later steps
-      run: echo "source $PWD/.venv/bin/activate" >> $GITHUB_ENV
-      shell: bash
