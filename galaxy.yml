@@ -28,8 +28,6 @@ build_ignore:
   - pyproject.toml
   - uv.lock
   - build
-  - .gitignore
-  - .github
-  - .vscode
+  - ".git*"
   - .pre-commit-config.yaml
   - CONTRIBUTING.md
