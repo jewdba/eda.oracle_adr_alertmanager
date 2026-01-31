@@ -1,18 +1,6 @@
 name: Ansible Test
 description: Run Ansible sanity or unit tests inside a collection
-runs:
-  using: "composite"
-  steps:
-    - name: Setup Python & uv
-      uses: ./.github/actions/ci-setup
-    - name: Create collection path
-      run: |
-        mkdir -p ansible_collections/jewdba/eda
-        shopt -s extglob
-        mv !(ansible_collections) ansible_collections/jewdba/eda/
-    - name: Run ansible-test
-      run: uv run ansible-test ${{ inputs.test-type }} ${{ inputs.extra-args }}
-      working-directory: ansible_collections/jewdba/eda
+
 inputs:
   test-type:
     description: Type of ansible-test to run (sanity or units)
@@ -21,3 +9,21 @@ inputs:
     description: Extra arguments to pass to ansible-test
     required: false
     default: ""
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Python & uv
+      uses: ./.github/actions/ci-setup
+
+    - name: Create collection path
+      run: |
+        mkdir -p ansible_collections/jewdba/eda
+        shopt -s extglob
+        mv !(ansible_collections) ansible_collections/jewdba/eda/
+      shell: bash
+
+    - name: Run ansible-test
+      run: uv run ansible-test ${{ inputs.test-type }} ${{ inputs.extra-args }}
+      working-directory: ansible_collections/jewdba/eda
+      shell: bash
