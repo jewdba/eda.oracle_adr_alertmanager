@@ -191,25 +191,8 @@ That's it ! well done.
 This avoids any database server local installation. Logs are read remotely and stored locally.
 
 ```
-# Create python Virtual environment
-python3 -m venv .venv
-# Activate venv
-source .venv/bin/activate
-# Install Fabric library locally
-pip install fabric
-
-
-
-# Remote tail: stream remote log line by line and append to local file
-python -c "
-from fabric import Connection
-c = Connection('oracle@svl-oat')
-c.run(
-    'tail -F /u01/app/grid/diag/tnslsnr/svl-ch-ora001t/listener/alert/log.xml',
-    pty=True
-)
-" >> /u01/app/grid/diag/tnslsnr/svl-ch-ora001t/listener/alert/log.xml
-
+ssh oracle@svl-ch-ora001t 'tail -f /u01/app/grid/diag/tnslsnr/svl-ch-ora001t/listener/alert/log.xml' \
+  > /u01/app/grid/diag/tnslsnr/svl-ch-ora001t/listener/alert/log.xml
 ```
 
 ## Changelog
