@@ -1,9 +1,14 @@
 name: Python CI
 
+name: Python CI
+
 on:
   push:
     branches:
-      - "**"
+      - "**"       # all branches
+    tags:
+      - "v*.*.*"   # all tags like v0.3.0, v0.3.1, ...
+
 
 jobs:
   pylint:

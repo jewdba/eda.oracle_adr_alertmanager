@@ -95,7 +95,10 @@ jobs:
           name: changelog
           path: .
       - name: Generate Release CHANGELOG delta
-        run: uv run cz changelog --incremental --file-name CHANGELOG_DELTA.md
+        run: |
+          git fetch --tags
+          PREV_TAG=$(git describe --tags --abbrev=0 ${{ github.ref_name }}^)
+          cz changelog $PREV_TAG..${{ github.ref_name }} --file-name CHANGELOG_DELTA.md
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
