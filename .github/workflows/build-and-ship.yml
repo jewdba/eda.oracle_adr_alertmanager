@@ -13,14 +13,17 @@ jobs:
   build-docs:
     if: >
       github.event.workflow_run.conclusion == 'success' &&
-      github.event.workflow_run.head_branch == 'main'
+      github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.event == 'push'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout source
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
 
-      - uses: ./.github/actions/python-setup
+      - name: Setup Python & uv
+        uses: ./.github/actions/python-setup
 
       - name: Install Sphinx dependencies
         run: uv run pip install -r build_docsite/requirements.txt
@@ -31,7 +34,8 @@ jobs:
       - name: Inject HTML docs version
         run: uv run python build/update_docsite_html_version.py docs/docsite
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload docs artifact
+        uses: actions/upload-artifact@v4
         with:
           name: docs
           path: docs/docsite
@@ -41,23 +45,28 @@ jobs:
     needs: build-docs
     if: >
       github.event.workflow_run.conclusion == 'success' &&
-      github.event.workflow_run.head_branch == 'main'
+      github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.event == 'push'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout source
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: ${{ github.event.workflow_run.head_sha }}
 
-      - uses: ./.github/actions/python-setup
+      - name: Setup Python & uv
+        uses: ./.github/actions/python-setup
 
-      - uses: actions/download-artifact@v4
+      - name: Download docs artifact
+        uses: actions/download-artifact@v4
         with:
           name: docs
           path: docs/docsite
 
       - name: Resolve release tag
         run: |
+          set -e
           git fetch --tags
           TAG=$(git describe --tags --exact-match)
           echo "TAG=$TAG" >> $GITHUB_ENV
@@ -71,13 +80,15 @@ jobs:
       - name: Build Ansible collection
         run: uv run ansible-galaxy collection build
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload CHANGELOG artifact
+        uses: actions/upload-artifact@v4
         with:
           name: changelog
           path: CHANGELOG.md
           retention-days: 1
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload collection artifact
+        uses: actions/upload-artifact@v4
         with:
           name: jewdba-eda-ansible-collection
           path: jewdba-eda-*.tar.gz
@@ -87,28 +98,34 @@ jobs:
     needs: build-collection
     if: >
       github.event.workflow_run.conclusion == 'success' &&
-      github.event.workflow_run.head_branch == 'main'
+      github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.event == 'push'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout source
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: ${{ github.event.workflow_run.head_sha }}
 
-      - uses: ./.github/actions/python-setup
+      - name: Setup Python & uv
+        uses: ./.github/actions/python-setup
 
       - name: Resolve release tag
         run: |
+          set -e
           git fetch --tags
           TAG=$(git describe --tags --exact-match)
           echo "TAG=$TAG" >> $GITHUB_ENV
 
-      - uses: actions/download-artifact@v4
+      - name: Download collection artifact
+        uses: actions/download-artifact@v4
         with:
           name: jewdba-eda-ansible-collection
           path: dist
 
-      - uses: actions/download-artifact@v4
+      - name: Download CHANGELOG artifact
+        uses: actions/download-artifact@v4
         with:
           name: changelog
           path: .
