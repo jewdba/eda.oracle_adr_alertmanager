@@ -2,8 +2,11 @@ name: Python CI
 
 on:
   push:
-    tags:
-      - "v*.*.*" # all tags
+    branches:
+      - "**"
+  pull_request:
+    branches:
+      - main
 
 jobs:
   pylint:
