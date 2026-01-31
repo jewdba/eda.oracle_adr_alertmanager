@@ -24,6 +24,3 @@ tests/output
 uv.lock
 # Sphinx / Antsibull build output
 docs/
-# Collection tarball
-*.tar.gz
-CHANGELOG.md

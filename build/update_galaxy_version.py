@@ -1,76 +1,45 @@
 """
-Script to update the version in galaxy.yml using Commitizen.
+Script to update the version in galaxy.yml using a provided tag.
 """
 
-import subprocess
-import os
+import yaml
 import sys
-from typing import Optional
+import os
 
-try:
-    import yaml
-except ImportError:
-    print("PyYAML is required. Install it with `pip install pyyaml`.")
-    sys.exit(1)
+GALAXY_FILE = "galaxy.yml"
 
 
-def get_commitizen_version() -> str:
-    """
-    Get the current version from Commitizen.
-
-    Returns:
-        str: The current version string.
-
-    Raises:
-        SystemExit: If the cz command fails.
-    """
-    try:
-        # Use -- separator for Commitizen to accept extra git args like --short
-        version_bytes = subprocess.check_output(
-            ["cz", "version"],
-            text=True,
-        )
-        version = version_bytes.strip()
-        return version
-    except subprocess.CalledProcessError as e:
-        print("Error getting version from Commitizen:", e)
-        sys.exit(1)
-
-
-def update_galaxy_yml(filename: str, version: Optional[str] = None) -> None:
+def update_galaxy_yml(version: str) -> None:
     """
     Update the version in galaxy.yml.
 
     Args:
-        filename (str): Path to the galaxy.yml file.
-        version (Optional[str]): Version to set. If None, fetched from Commitizen.
+        version (str): Version string to set.
     """
-    if not os.path.exists(filename):
-        print(f"{filename} not found!")
+    if not os.path.exists(GALAXY_FILE):
+        print(f"{GALAXY_FILE} not found!")
         sys.exit(1)
 
-    if version is None:
-        version = get_commitizen_version()
-
-    print(f"Updating {filename} version to {version}")
+    print(f"Updating {GALAXY_FILE} version to {version}")
 
     # Load YAML
-    with open(filename, "r", encoding="utf-8") as f:
+    with open(GALAXY_FILE, "r", encoding="utf-8") as f:
         data = yaml.safe_load(f)
 
     # Update version
     data["version"] = version
 
     # Save YAML
-    with open(filename, "w", encoding="utf-8") as f:
+    with open(GALAXY_FILE, "w", encoding="utf-8") as f:
         yaml.safe_dump(data, f, sort_keys=False)
 
-    print(f"{filename} updated successfully!")
+    print(f"{GALAXY_FILE} updated successfully!")
 
 
 if __name__ == "__main__":
-    # CLI: python build/update_galaxy_version.py [galaxy.yml] [version]
-    yaml_file = sys.argv[1] if len(sys.argv) > 1 else "galaxy.yml"
-    version_arg = sys.argv[2] if len(sys.argv) > 2 else None
+    if len(sys.argv) < 2:
+        print("Usage: python build/update_galaxy_version.py <version>")
+        sys.exit(1)
 
-    update_galaxy_yml(yaml_file, version_arg)
+    version_arg = sys.argv[1]
+    update_galaxy_yml(version_arg)

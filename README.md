@@ -192,6 +192,10 @@ That's it ! well done.
 This avoids any database server local installation. Logs are read remotely and stored locally.
 
 ```
+# Create python Virtual environment
+python3 -m venv .venv
+# Activate venv
+source .venv/bin/activate
 # Install Fabric library locally
 pip install fabric
 
@@ -216,6 +220,6 @@ Please refer to [CHANGELOG.md](https://github.com/jewdba/eda.oracle_adr_alertman
 ## RoadMap
 
 -> tag is never incremented ;)
--> TEST!
+.> ChangeLog
 -> ReEnable CI
 -> Galaxy uplaod
