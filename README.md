@@ -217,4 +217,5 @@ Please refer to [CHANGELOG.md](https://github.com/jewdba/eda.oracle_adr_alertman
 
 -> tag is never incremented ;)
 -> TEST!
+-> ReEnable CI
 -> Galaxy uplaod

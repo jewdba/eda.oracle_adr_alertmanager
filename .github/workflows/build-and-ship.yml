@@ -76,7 +76,7 @@ jobs:
         run: uv run cz changelog --file-name CHANGELOG.md
 
       - name: TEST
-        run: ls -l
+        run: ls -la
       - name: Build Ansible collection
         run: uv run ansible-galaxy collection build
 
