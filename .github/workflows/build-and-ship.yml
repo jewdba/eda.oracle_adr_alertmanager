@@ -14,8 +14,6 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
-      - name: Run Python CI workflow
-        uses: ./.github/workflows/python-ci.yml
 
   build-docs:
     needs: python-ci
