@@ -2,10 +2,6 @@ name: Python CI
 
 on:
   push:
-    branches:
-      - "**" # all branches
-    branches-ignore:
-      - main # exclude main branch
     tags:
       - "v*.*.*" # all tags
 
