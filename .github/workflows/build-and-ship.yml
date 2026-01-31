@@ -15,9 +15,6 @@ jobs:
       github.event.workflow_run.conclusion == 'success' &&
       github.event.workflow_run.head_branch == 'main'
     runs-on: ubuntu-latest
-    outputs:
-      docs-path: docs/docsite
-
     steps:
       - uses: actions/checkout@v4
         with:
@@ -59,6 +56,12 @@ jobs:
           name: docs
           path: docs/docsite
 
+      - name: Resolve release tag
+        run: |
+          git fetch --tags
+          TAG=$(git describe --tags --exact-match)
+          echo "TAG=$TAG" >> $GITHUB_ENV
+
       - name: Inject galaxy.yml version
         run: uv run python build/update_galaxy_version.py galaxy.yml
 
@@ -89,22 +92,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           ref: ${{ github.event.workflow_run.head_sha }}
 
       - uses: ./.github/actions/python-setup
 
-      - name: Commitizen version
+      - name: Resolve release tag
         run: |
-          TAG=$(uv run cz version)
+          git fetch --tags
+          TAG=$(git describe --tags --exact-match)
           echo "TAG=$TAG" >> $GITHUB_ENV
 
       - uses: actions/download-artifact@v4
         with:
           name: jewdba-eda-ansible-collection
+          path: dist
 
       - uses: actions/download-artifact@v4
         with:
           name: changelog
+          path: .
 
       - name: Generate Release CHANGELOG delta
         run: uv run cz changelog --incremental --file-name CHANGELOG_DELTA.md
@@ -115,6 +122,6 @@ jobs:
           tag_name: ${{ env.TAG }}
           name: Release ${{ env.TAG }}
           files: |
-            jewdba-eda-*.tar.gz
+            dist/jewdba-eda-*.tar.gz
             CHANGELOG.md
           body_path: CHANGELOG_DELTA.md
