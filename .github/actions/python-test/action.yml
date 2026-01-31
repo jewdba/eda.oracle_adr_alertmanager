@@ -1,12 +1,6 @@
 name: Python Test
 description: Run Python tests (pylint or pytest)
-runs:
-  using: "composite"
-  steps:
-    - name: Setup Python & uv
-      uses: ./.github/actions/ci-setup
-    - name: Run Python test
-      run: uv run ${{ inputs.test-type }} ${{ inputs.extra-args }}
+
 inputs:
   test-type:
     description: Type of Python test to run (pylint, pytest, etc.)
@@ -15,3 +9,13 @@ inputs:
     description: Extra arguments to pass to the command
     required: false
     default: ""
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Python & uv
+      uses: ./.github/actions/ci-setup
+
+    - name: Run Python test
+      run: uv run ${{ inputs.test-type }} ${{ inputs.extra-args }}
+      shell: bash
