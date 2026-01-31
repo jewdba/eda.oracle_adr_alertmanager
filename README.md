@@ -219,4 +219,5 @@ Please refer to [CHANGELOG.md](CHANGELOG.md) for details on what's changed in ea
 ## RoadMap
 
 -> ReEnable CI
+-> Check versiob of dic
 -> Galaxy uplaod
