@@ -3,7 +3,6 @@ description: Run Python tests (pylint or pytest)
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v4
     - name: Setup Python & uv
       uses: ./.github/actions/ci-setup
     - name: Run Python test

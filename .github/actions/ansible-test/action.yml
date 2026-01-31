@@ -3,7 +3,6 @@ description: Run Ansible sanity or unit tests inside a collection
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v4
     - name: Setup Python & uv
       uses: ./.github/actions/ci-setup
     - name: Create collection path
