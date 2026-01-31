@@ -28,7 +28,7 @@ jobs:
       - name: Build documentation
         run: uv run sphinx-build -b html build/docsite docs/docsite
       - name: Inject HTML docs version
-        run: uv run python build/update_docsite_html_version.py ${{ github.ref_name }}
+        run: uv run python build/update_docsite_html_version.py ${GITHUB_REF_NAME#v}
       - name: Upload docs artifact
         uses: actions/upload-artifact@v4
         with:
@@ -54,7 +54,7 @@ jobs:
           name: docs
           path: docs/docsite
       - name: Inject galaxy.yml version
-        run: uv run python build/update_galaxy_version.py ${{ github.ref_name }}
+        run: uv run python build/update_galaxy_version.py ${GITHUB_REF_NAME#v}
       - name: Generate CHANGELOG
         run: uv run cz changelog --file-name CHANGELOG.md
       - name: Build Ansible collection
@@ -74,7 +74,6 @@ jobs:
 
   release:
     needs: build-collection
-    if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
@@ -97,7 +96,7 @@ jobs:
         run: git fetch --tags
       - name: Generate Release CHANGELOG delta
         run: |
-          PREV_TAG=$(git describe --tags --abbrev=0 $GITHUB_REF^)
+          PREV_TAG=$(git describe --tags --abbrev=0 ${GITHUB_REF}^)
           uv run cz changelog $PREV_TAG..${{ github.ref_name }} --file-name CHANGELOG_DELTA.md
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
