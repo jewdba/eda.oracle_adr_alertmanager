@@ -1,9 +1,10 @@
 name: Python CI
 
 on:
+  workflow_call:
   push:
-    branches:
-      - "**"
+    branches-ignore:
+      - main
   pull_request:
     branches:
       - main
@@ -12,39 +13,31 @@ jobs:
   pylint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/python-setup
-      - run: uv run pylint plugins
+      - uses: ./.github/actions/python-test
+        with:
+          test-type: pylint
+          extra-args: plugins
+
   pytest:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/python-setup
-      - run: uv run pytest
+      - uses: ./.github/actions/python-test
+        with:
+          test-type: pytest
+
   ansible-sanity:
     needs: [pylint, pytest]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/python-setup
-      - name: Create collection path
-        run: |
-          mkdir -p ansible_collections/jewdba/eda
-          shopt -s extglob
-          mv !(ansible_collections) ansible_collections/jewdba/eda/
-      - run: uv run ansible-test sanity
-        working-directory: ansible_collections/jewdba/eda
+      - uses: ./.github/actions/ansible-test
+        with:
+          test-type: sanity
 
   ansible-units:
     needs: [pylint, pytest]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/python-setup
-      - name: Create collection path
-        run: |
-          mkdir -p ansible_collections/jewdba/eda
-          shopt -s extglob
-          mv !(ansible_collections) ansible_collections/jewdba/eda/
-      - run: uv run ansible-test units --python 3.12
-        working-directory: ansible_collections/jewdba/eda
+      - uses: ./.github/actions/ansible-test
+        with:
+          test-type: units
+          extra-args: "--python 3.12"

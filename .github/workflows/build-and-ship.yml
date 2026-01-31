@@ -9,13 +9,17 @@ permissions:
   contents: write
 
 jobs:
+  python-ci:
+    uses: ./.github/workflows/python-ci.yml
+
   build-docs:
+    needs: python-ci
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
       - name: Setup Python & uv
-        uses: ./.github/actions/python-setup
+        uses: ./.github/actions/ci-setup
       - name: Install Sphinx dependencies
         run: uv run pip install -r build/docsite/requirements.txt
       - name: Build documentation
@@ -38,7 +42,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Setup Python & uv
-        uses: ./.github/actions/python-setup
+        uses: ./.github/actions/ci-setup
       - name: Download docs artifact
         uses: actions/download-artifact@v4
         with:
@@ -64,7 +68,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Setup Python & uv
-        uses: ./.github/actions/python-setup
+        uses: ./.github/actions/ci-setup
       - name: Download collection artifact
         uses: actions/download-artifact@v4
         with:
