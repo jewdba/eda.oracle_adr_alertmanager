@@ -39,6 +39,4 @@ runs:
 
     - name: Activate virtual environment for later steps
       run: echo "source $PWD/.venv/bin/activate" >> $GITHUB_ENV
-
-    - name: Checkout source
-      uses: actions/checkout@v4
+      shell: bash
